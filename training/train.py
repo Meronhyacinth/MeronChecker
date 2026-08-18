@@ -16,7 +16,7 @@ MODEL_DIR = ROOT / "artifacts"
 RANDOM_SEED = 42
 TARGET_PER_CLASS = 50_000
 HC3_PER_CLASS = 6_000
-MODERN_TRAIN_PER_CLASS = 18_000
+MODERN_TRAIN_PER_CLASS = 12_000
 WIKIPEDIA_HUMAN = TARGET_PER_CLASS - HC3_PER_CLASS - MODERN_TRAIN_PER_CLASS
 MDTA_AI = TARGET_PER_CLASS - HC3_PER_CLASS - MODERN_TRAIN_PER_CLASS
 EXTERNAL_PER_CLASS = 2_000
@@ -74,10 +74,9 @@ def collect_modern_examples(split, per_class):
             ai.append(text)
         if len(human) >= per_class and len(ai) >= per_class:
             break
-    human, ai = take_unique(human, per_class), take_unique(ai, per_class)
     if min(len(human), len(ai)) < per_class:
         raise RuntimeError(f"{MODERN_DATASET} {split} did not provide enough examples.")
-    return human, ai
+    return human[:per_class], ai[:per_class]
 
 
 def collect_wikipedia_human(limit):
