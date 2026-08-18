@@ -1,0 +1,51 @@
+# MeronChecker
+
+A transparent **AI-writing likelihood and source-similarity assistant**. It is a learning project, not a plagiarism verdict tool.
+
+## What this project does
+
+- Provides a clear analysis interface for English prose
+- Explains model signals instead of hiding them behind an accusation
+- Includes a trainable, reproducible baseline classifier
+- Reports accuracy, precision, recall, and false-positive rate on held-out test data
+- Keeps source similarity separate from AI-writing likelihood
+
+## What it does not do
+
+- It cannot prove that a person used AI
+- It cannot decide academic misconduct
+- It cannot search private databases such as Turnitin's repository
+- It must not be used as the sole basis for disciplinary action
+
+## Project structure
+
+- `index.html` — public prototype interface
+- `training/train.py` — trains a baseline classifier from public HC3 data
+- `api/app.py` — optional local API that serves a trained model
+- `training/evaluate.py` — produces a held-out evaluation report
+
+## Run training locally
+
+```bash
+python -m venv .venv
+pip install -r requirements.txt
+python training/train.py
+python training/evaluate.py
+uvicorn api.app:app --reload
+```
+
+The initial model is intentionally simple: word and character TF-IDF features with logistic regression. This makes it inspectable and practical for a first baseline. A stronger model must only replace it after being tested against data that it did not see during training.
+
+## Cross-check plan
+
+Use the same non-sensitive, labelled test samples with:
+
+1. MeronChecker
+2. ZeroGPT, using its official free allowance if available
+3. Scribbr's free AI detector where permitted
+
+Record results manually in a comparison table. Turnitin is not included unless legitimate university access is available. Do not upload private, graded, or confidential work to external services.
+
+## Responsible use
+
+The interface must always show: **“AI-likelihood is an indicator, not proof.”** Similarity matches must link to their public source and be reviewed for citations, quotations, and context.
