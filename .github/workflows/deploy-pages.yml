@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - index.html
+      - CNAME
       - artifacts/browser_model.json
       - .github/workflows/deploy-pages.yml
   workflow_dispatch:
@@ -31,6 +32,7 @@ jobs:
         run: |
           mkdir -p public/artifacts
           cp index.html public/index.html
+          cp CNAME public/CNAME
           cp artifacts/browser_model.json public/artifacts/browser_model.json
       - uses: actions/upload-pages-artifact@v3
         with:
