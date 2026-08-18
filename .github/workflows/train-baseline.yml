@@ -11,6 +11,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: meronchecker-training
+  cancel-in-progress: true
+
 jobs:
   train:
     runs-on: ubuntu-latest
