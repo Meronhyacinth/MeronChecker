@@ -1,11 +1,11 @@
 # MeronChecker
 
-A transparent **AI-writing likelihood and public-source review assistant**. It is a learning project, not a plagiarism verdict tool. http://meronchecker.meronhyacinth.dpdns.org/
+A transparent **AI-writing likelihood and automated public-source similarity assistant**. It is a learning project, not a plagiarism verdict tool. http://meronchecker.meronhyacinth.dpdns.org/
 
 ## What this project does
 
 - Provides a clear analysis interface for English prose
-- Separates AI-writing likelihood from public-source review
+- Separates AI-writing likelihood from automated public-source similarity
 - Explains model signals instead of hiding them behind an accusation
 - Includes a trainable, reproducible baseline classifier
 - Reports internal and separately held-out evaluation results
@@ -17,7 +17,7 @@ A transparent **AI-writing likelihood and public-source review assistant**. It i
 - It cannot decide academic misconduct
 - It cannot search private databases such as Turnitin's repository
 - It must not be used as the sole basis for disciplinary action
-- It does not automatically send text to a search engine; the visitor chooses whether to open an exact-phrase search
+- It cannot check private student-paper repositories, subscription databases, or every page on the web
 
 ## Model and evaluation
 
@@ -47,7 +47,7 @@ The trained baseline is exported as `artifacts/browser_model.json`. The public i
 
 The optional Supabase schema is for future authenticated history and model-evaluation metadata. It is designed to store a score, date, word count and text fingerprint — not the full submitted text.
 
-For source review, MeronChecker suggests distinctive phrases and gives the visitor optional Google and Bing exact-phrase links. It does **not** claim to search the web automatically, Turnitin, or another private plagiarism database.
+For the automatic source check, MeronChecker sends selected sentences to OpenAlex, a public academic index, then compares retrieved titles and available abstracts for exact phrase overlap. It shows the source cards, overlap score and matching phrase automatically. The visitor must first opt in because this sends selected writing phrases to an external service. It does **not** claim access to Turnitin, another private plagiarism database, or the complete web.
 
 ## Run training locally
 
