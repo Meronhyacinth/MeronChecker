@@ -21,14 +21,16 @@ A transparent **AI-writing likelihood and automated public-source similarity ass
 
 ## Model and evaluation
 
-The current `baseline-0.2.0` model uses word and character TF-IDF features with logistic regression. This keeps the model inspectable and small enough for private, in-browser scoring.
+The current `baseline-0.3.0` model uses word and character TF-IDF features with balanced logistic regression. This keeps the model inspectable and small enough for private, in-browser scoring.
 
 Training uses balanced labelled public samples from:
 
 - Hello-SimpleAI/HC3
 - `silentone0725/ai-human-text-detection-v1` training split
+- Wikimedia English Wikipedia passages
+- `nsp909/MDTA` open-model responses
 
-The workflow also evaluates against the second dataset's test split, which is not used for training. The machine-generated evaluation is saved in `artifacts/evaluation.json`.
+Training uses 100,000 balanced labelled examples (50,000 human and 50,000 AI). The workflow evaluates against a separate 4,000-text test set that is not used for training, then calculates 20 reproducible balanced test rounds. The machine-generated evaluation is saved in `artifacts/evaluation.json`.
 
 These results are useful engineering checks, not a universal accuracy claim. A model can still make mistakes on edited AI text, short writing, non-English text, a new model, or a writing style not represented in the public data.
 
