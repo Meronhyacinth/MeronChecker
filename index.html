@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="MeronChecker is a transparent AI-writing likelihood and source-similarity assistant." />
+  <title>MeronChecker — Writing insight, not accusation</title>
+  <style>
+    :root{--ink:#eef3ff;--muted:#9aabc2;--line:#26354c;--bg:#07101d;--panel:#0d1828;--panel2:#111f34;--violet:#8e6bff;--cyan:#52e4d4;--amber:#ffcb6b;--danger:#ff7676}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 75% -10%,#35205b 0,transparent 35%),var(--bg);color:var(--ink);font:15px Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,textarea{font:inherit}.shell{max-width:1180px;margin:auto;padding:24px}.nav{display:flex;justify-content:space-between;align-items:center;padding:8px 0 46px}.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.04em;font-size:21px}.mark{width:28px;height:28px;border:2px solid var(--cyan);border-radius:9px;display:grid;place-items:center;color:var(--cyan);font-size:14px}.nav span{color:var(--muted);font-size:13px}.hero{max-width:780px;margin:26px auto 44px;text-align:center}.eyebrow{color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.hero h1{font-size:clamp(38px,7vw,68px);line-height:.98;letter-spacing:-.065em;margin:15px 0 19px}.hero h1 em{font-style:normal;color:#a78dff}.hero p{margin:auto;max-width:620px;color:var(--muted);line-height:1.7}.workspace{display:grid;grid-template-columns:1.25fr .75fr;gap:18px}.card{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#101c2e,#0a1422);box-shadow:0 16px 50px #0002}.editor{padding:18px}.editor-head,.actions,.metric-head{display:flex;align-items:center;justify-content:space-between;gap:14px}.editor-head b{font-size:14px}.editor-head span{color:var(--muted);font-size:12px}.editor textarea{width:100%;min-height:290px;resize:vertical;margin:14px 0;border:1px solid #31425e;border-radius:12px;background:#08111e;color:var(--ink);padding:16px;line-height:1.65;outline:none}.editor textarea:focus{border-color:#8e6bff;box-shadow:0 0 0 3px #8e6bff22}.primary,.ghost{border:0;border-radius:10px;padding:11px 15px;cursor:pointer;font-weight:750;font-size:13px}.primary{color:#08111e;background:linear-gradient(120deg,#66eedf,#89a0ff)}.ghost{color:var(--ink);border:1px solid #3b4b66;background:transparent}.notice{display:flex;gap:10px;margin-top:15px;padding:12px;border-radius:10px;background:#172640;color:#cbd6ea;font-size:12px;line-height:1.5}.notice strong{color:var(--amber)}.results{padding:18px}.results h2{font-size:14px;margin:0}.meter{position:relative;height:10px;margin:17px 0 10px;border-radius:99px;background:linear-gradient(90deg,#52e4d4,#ffcb6b,#ff7676)}.needle{position:absolute;top:-6px;left:10%;width:4px;height:22px;border-radius:5px;background:#fff;box-shadow:0 0 0 3px #08111e}.score-row{display:flex;align-items:end;justify-content:space-between}.score{font-size:52px;font-weight:850;letter-spacing:-.08em}.score-label{color:var(--muted);font-size:12px;text-align:right;line-height:1.5}.metrics{display:grid;gap:10px;margin-top:24px}.metric{padding:13px;border:1px solid #273853;border-radius:12px;background:#0a1422}.metric-head{font-size:12px}.metric-head span{color:var(--muted)}.bar{height:4px;margin-top:10px;border-radius:9px;background:#23334b}.bar i{display:block;height:100%;width:0;border-radius:inherit;background:var(--violet);transition:width .4s}.similarity{grid-column:1/-1;padding:22px}.similarity h2{margin:0 0 7px;font-size:18px}.similarity>p{margin:0 0 18px;color:var(--muted);font-size:13px;line-height:1.6}.matches{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.match{min-height:108px;padding:14px;border:1px solid #293950;border-radius:12px;background:#0a1422}.tag{display:inline-block;padding:4px 7px;border-radius:5px;background:#28394f;color:#b9c9df;font-size:10px;font-weight:700}.match b{display:block;margin:12px 0 5px;font-size:13px}.match p{margin:0;color:var(--muted);font-size:11px;line-height:1.45}.methods{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin:26px 0}.method{padding:17px;border-top:1px solid #34445f}.method b{color:var(--cyan);font-size:12px}.method p{margin:7px 0 0;color:var(--muted);font-size:12px;line-height:1.55}footer{padding:18px 0 5px;color:#71839e;font-size:12px;text-align:center}@media(max-width:760px){.shell{padding:18px}.nav{padding-bottom:20px}.nav span{display:none}.workspace{grid-template-columns:1fr}.similarity{grid-column:auto}.matches,.methods{grid-template-columns:1fr}.editor textarea{min-height:230px}.hero{margin-top:15px}.score{font-size:45px}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <nav class="nav"><div class="brand"><div class="mark">M</div>MeronChecker</div><span>Writing insight, not accusation.</span></nav>
+    <section class="hero"><div class="eyebrow">English writing assistant · prototype</div><h1>Check writing with <em>context.</em></h1><p>Explore AI-writing signals and possible phrase overlaps. Results are prompts for review—not proof of plagiarism or AI use.</p></section>
+    <section class="workspace" aria-label="Writing analysis workspace">
+      <div class="card editor">
+        <div class="editor-head"><b>Paste writing to analyse</b><span id="count">0 words</span></div>
+        <textarea id="text" aria-label="Writing to analyse" placeholder="Paste at least a paragraph here..."></textarea>
+        <div class="actions"><button class="ghost" id="sample">Use sample</button><button class="primary" id="analyse">Analyse writing</button></div>
+        <div class="notice"><strong>Important</strong><span>MeronChecker does not decide misconduct. Do not submit private, confidential, or graded work to third-party checkers without permission.</span></div>
+      </div>
+      <aside class="card results" aria-live="polite">
+        <h2>AI-writing likelihood</h2><div class="meter"><i class="needle" id="needle"></i></div>
+        <div class="score-row"><div class="score" id="score">—</div><div class="score-label" id="label">Add text to see<br/>a prototype estimate.</div></div>
+        <div class="metrics">
+          <div class="metric"><div class="metric-head"><b>Sentence variation</b><span id="variation">—</span></div><div class="bar"><i id="variationBar"></i></div></div>
+          <div class="metric"><div class="metric-head"><b>Repeated phrasing</b><span id="repeat">—</span></div><div class="bar"><i id="repeatBar"></i></div></div>
+          <div class="metric"><div class="metric-head"><b>Writing length</b><span id="length">—</span></div><div class="bar"><i id="lengthBar"></i></div></div>
+        </div>
+      </aside>
+      <section class="card similarity"><h2>Potential phrase overlaps</h2><p>This prototype shows a review layout. Production matching will use allowed public sources and always show links, rather than claiming a complete plagiarism database.</p><div class="matches" id="matches"><article class="match"><span class="tag">Awaiting text</span><b>No source check yet</b><p>Run an analysis to see candidate phrases for review.</p></article></div></section>
+    </section>
+    <section class="methods"><article class="method"><b>01 · Transparent scoring</b><p>Every indicator is explained. A percentage cannot prove authorship.</p></article><article class="method"><b>02 · Trainable model</b><p>The repository includes a training pipeline and held-out evaluation report.</p></article><article class="method"><b>03 · Cross-checking</b><p>Compare test samples with permitted external tools; never treat agreement as certainty.</p></article></section>
+    <footer>MeronChecker · Built for learning and careful review.</footer>
+  </main>
+<script>
+const text=document.querySelector('#text'), count=document.querySelector('#count');
+const sample='Artificial intelligence is changing how people work, study, and communicate. It can help people organise ideas, but every writer should review information carefully. Good writing still needs clear evidence, accurate citations, and a personal point of view.';
+const words=s=>s.trim().match(/[A-Za-zÀ-ÿ']+/g)||[];
+function set(id,v){document.querySelector(id).textContent=v}function width(id,v){document.querySelector(id).style.width=v+'%'}
+text.addEventListener('input',()=>set('#count',words(text.value).length+' words'));
+document.querySelector('#sample').onclick=()=>{text.value=sample;text.dispatchEvent(new Event('input'))};
+document.querySelector('#analyse').onclick=()=>{
+ const value=text.value.trim(), w=words(value), sentences=value.split(/[.!?]+/).filter(x=>words(x).length>2);
+ if(w.length<12){set('#label','Please enter at least<br/>12 words first.');return}
+ const lengths=sentences.map(x=>words(x).length), mean=lengths.reduce((a,b)=>a+b,0)/lengths.length, variation=lengths.length>1?Math.min(100,Math.round(Math.sqrt(lengths.reduce((a,b)=>a+(b-mean)**2,0)/lengths.length)*9)):15;
+ const normalized=w.map(x=>x.toLowerCase()), repeats=normalized.length-new Set(normalized).size, repeat=Math.min(100,Math.round(repeats/normalized.length*180));
+ const lengthScore=Math.min(100,Math.round(w.length/3)); const likelihood=Math.max(8,Math.min(88,Math.round(36+(100-variation)*.22+repeat*.18+(w.length<80?10:0))));
+ set('#score',likelihood+'%');set('#label',likelihood<35?'Lower-signal result<br/>Review, do not conclude.':likelihood<65?'Mixed signals found<br/>Review with context.':'More model-like signals<br/>Review with context.');
+ document.querySelector('#needle').style.left=likelihood+'%';set('#variation',variation+'/100');set('#repeat',repeat+'/100');set('#length',w.length+' words');width('#variationBar',variation);width('#repeatBar',repeat);width('#lengthBar',lengthScore);
+ const phrases=sentences.slice(0,3).map((s,i)=>'<article class="match"><span class="tag">'+(i===0?'Candidate phrase':'Needs source review')+'</span><b>'+words(s).slice(0,8).join(' ')+'…</b><p>Search permitted public sources and verify citations before drawing any conclusion.</p></article>').join('');
+ document.querySelector('#matches').innerHTML=phrases||'<article class="match"><b>No complete sentences found</b></article>';
+};
+</script>
+</body></html>
