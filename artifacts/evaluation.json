@@ -1,0 +1,24 @@
+{
+  "dataset": "Hello-SimpleAI/HC3 (public, streamed JSONL)",
+  "classes": {
+    "0": "human",
+    "1": "AI"
+  },
+  "train_examples": 9600,
+  "test_examples": 2400,
+  "accuracy": 0.9992,
+  "ai_precision": 1.0,
+  "ai_recall": 0.9983,
+  "ai_f1": 0.9992,
+  "confusion_matrix": [
+    [
+      1200,
+      0
+    ],
+    [
+      2,
+      1198
+    ]
+  ],
+  "warning": "This score applies only to this held-out dataset. It is not a claim of real-world accuracy."
+}
