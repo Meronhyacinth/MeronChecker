@@ -14,16 +14,39 @@ from sklearn.metrics import accuracy_score, precision_recall_fscore_support, con
 ROOT = Path(__file__).resolve().parents[1]
 MODEL_DIR = ROOT / "artifacts"
 RANDOM_SEED = 42
-MAX_PER_CLASS = 12_000
+MAX_PER_CLASS = 6_000
+DATA_URL = "https://huggingface.co/datasets/Hello-SimpleAI/HC3/resolve/main/all.jsonl"
 
 def collect_examples():
-    dataset = load_dataset("Hello-SimpleAI/HC3", "all", split="train")
+    # HC3's repository includes a legacy loader script. Streaming the maintained
+    # JSONL file avoids relying on that script and stops once our balanced sample
+    # is collected, which keeps free CI usage practical.
+    rows = load_dataset(
+        "json",
+        data_files={"train": DATA_URL},
+        split="train",
+        streaming=True,
+    ).shuffle(seed=RANDOM_SEED, buffer_size=10_000)
+
     human, ai = [], []
-    for row in dataset:
-        human.extend(x.strip() for x in row.get("human_answers", []) if len(x.strip()) >= 120)
-        ai.extend(x.strip() for x in row.get("chatgpt_answers", []) if len(x.strip()) >= 120)
+    for row in rows:
+        human.extend(
+            answer.strip()
+            for answer in row.get("human_answers", [])
+            if len(answer.strip()) >= 120
+        )
+        ai.extend(
+            answer.strip()
+            for answer in row.get("chatgpt_answers", [])
+            if len(answer.strip()) >= 120
+        )
+        if len(human) >= MAX_PER_CLASS and len(ai) >= MAX_PER_CLASS:
+            break
+
     random.Random(RANDOM_SEED).shuffle(human)
     random.Random(RANDOM_SEED).shuffle(ai)
+    if min(len(human), len(ai)) < 500:
+        raise RuntimeError("HC3 did not provide enough usable English examples.")
     return human[:MAX_PER_CLASS], ai[:MAX_PER_CLASS]
 
 def main():
@@ -35,16 +58,18 @@ def main():
         texts, labels, test_size=0.20, random_state=RANDOM_SEED, stratify=labels
     )
     features = FeatureUnion([
-        ("word", TfidfVectorizer(ngram_range=(1, 2), min_df=2, max_features=80_000, sublinear_tf=True)),
-        ("char", TfidfVectorizer(analyzer="char_wb", ngram_range=(3, 5), min_df=2, max_features=80_000, sublinear_tf=True)),
+        ("word", TfidfVectorizer(ngram_range=(1, 2), min_df=2, max_features=45_000, sublinear_tf=True)),
+        ("char", TfidfVectorizer(analyzer="char_wb", ngram_range=(3, 5), min_df=2, max_features=45_000, sublinear_tf=True)),
     ])
     x_train_features = features.fit_transform(x_train)
-    model = LogisticRegression(max_iter=1500, class_weight="balanced", n_jobs=None)
+    model = LogisticRegression(max_iter=800, class_weight="balanced")
     model.fit(x_train_features, y_train)
     predictions = model.predict(features.transform(x_test))
-    precision, recall, f1, _ = precision_recall_fscore_support(y_test, predictions, average="binary", zero_division=0)
+    precision, recall, f1, _ = precision_recall_fscore_support(
+        y_test, predictions, average="binary", zero_division=0
+    )
     report = {
-        "dataset": "Hello-SimpleAI/HC3 (public)",
+        "dataset": "Hello-SimpleAI/HC3 (public, streamed JSONL)",
         "classes": {"0": "human", "1": "AI"},
         "train_examples": len(x_train),
         "test_examples": len(x_test),
