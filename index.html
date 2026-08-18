@@ -54,7 +54,7 @@
 
 const text = document.querySelector('#text');
 const count = document.querySelector('#count');
-const sample = 'Artificial intelligence is changing how people work, study, and communicate. It can help people organise ideas, but every writer should review information carefully. Good writing still needs clear evidence, accurate citations, and a personal point of view.';
+const sample = 'Artificial intelligence is changing how people work, study, and communicate in universities, offices, and daily life. It can organise ideas, summarise complex information, and support early drafts, but it cannot replace a writer's responsibility. A strong essay needs reliable evidence, accurate citations, and a clear argument that reflects the writer's own understanding. Students should verify every claim, check whether sources are current, and explain why each source supports the conclusion. They should also revise wording that sounds generic or overly formal. Technology is most useful when it helps people think more carefully rather than encouraging them to submit unreviewed text. Responsible writing requires honesty, context, and enough detail for a reader to understand how the final conclusion was reached.';
 const state = { model: null, loading: true };
 const words = value => value.trim().match(/[A-Za-zÀ-ÿ0-9_']+/g) || [];
 const set = (selector, value) => { document.querySelector(selector).textContent = value; };
