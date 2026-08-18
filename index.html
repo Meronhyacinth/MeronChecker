@@ -35,22 +35,133 @@
     <footer>MeronChecker · Built for learning and careful review.</footer>
   </main>
 <script>
-const text=document.querySelector('#text'), count=document.querySelector('#count');
-const sample='Artificial intelligence is changing how people work, study, and communicate. It can help people organise ideas, but every writer should review information carefully. Good writing still needs clear evidence, accurate citations, and a personal point of view.';
-const words=s=>s.trim().match(/[A-Za-zÀ-ÿ']+/g)||[];
-function set(id,v){document.querySelector(id).textContent=v}function width(id,v){document.querySelector(id).style.width=v+'%'}
-text.addEventListener('input',()=>set('#count',words(text.value).length+' words'));
-document.querySelector('#sample').onclick=()=>{text.value=sample;text.dispatchEvent(new Event('input'))};
-document.querySelector('#analyse').onclick=()=>{
- const value=text.value.trim(), w=words(value), sentences=value.split(/[.!?]+/).filter(x=>words(x).length>2);
- if(w.length<12){set('#label','Please enter at least<br/>12 words first.');return}
- const lengths=sentences.map(x=>words(x).length), mean=lengths.reduce((a,b)=>a+b,0)/lengths.length, variation=lengths.length>1?Math.min(100,Math.round(Math.sqrt(lengths.reduce((a,b)=>a+(b-mean)**2,0)/lengths.length)*9)):15;
- const normalized=w.map(x=>x.toLowerCase()), repeats=normalized.length-new Set(normalized).size, repeat=Math.min(100,Math.round(repeats/normalized.length*180));
- const lengthScore=Math.min(100,Math.round(w.length/3)); const likelihood=Math.max(8,Math.min(88,Math.round(36+(100-variation)*.22+repeat*.18+(w.length<80?10:0))));
- set('#score',likelihood+'%');set('#label',likelihood<35?'Lower-signal result<br/>Review, do not conclude.':likelihood<65?'Mixed signals found<br/>Review with context.':'More model-like signals<br/>Review with context.');
- document.querySelector('#needle').style.left=likelihood+'%';set('#variation',variation+'/100');set('#repeat',repeat+'/100');set('#length',w.length+' words');width('#variationBar',variation);width('#repeatBar',repeat);width('#lengthBar',lengthScore);
- const phrases=sentences.slice(0,3).map((s,i)=>'<article class="match"><span class="tag">'+(i===0?'Candidate phrase':'Needs source review')+'</span><b>'+words(s).slice(0,8).join(' ')+'…</b><p>Search permitted public sources and verify citations before drawing any conclusion.</p></article>').join('');
- document.querySelector('#matches').innerHTML=phrases||'<article class="match"><b>No complete sentences found</b></article>';
+
+const text = document.querySelector('#text');
+const count = document.querySelector('#count');
+const sample = 'Artificial intelligence is changing how people work, study, and communicate. It can help people organise ideas, but every writer should review information carefully. Good writing still needs clear evidence, accurate citations, and a personal point of view.';
+const state = { model: null, loading: true };
+
+const words = value => value.trim().match(/[A-Za-zÀ-ÿ0-9_']+/g) || [];
+const set = (selector, value) => { document.querySelector(selector).textContent = value; };
+const width = (selector, value) => { document.querySelector(selector).style.width = value + '%'; };
+const sigmoid = value => 1 / (1 + Math.exp(-Math.max(-30, Math.min(30, value))));
+
+function metricValues(value) {
+  const allWords = words(value);
+  const sentences = value.split(/[.!?]+/).filter(part => words(part).length > 2);
+  const lengths = sentences.map(part => words(part).length);
+  const mean = lengths.length ? lengths.reduce((a, b) => a + b, 0) / lengths.length : 0;
+  const variation = lengths.length > 1
+    ? Math.min(100, Math.round(Math.sqrt(lengths.reduce((a, b) => a + (b - mean) ** 2, 0) / lengths.length) * 9))
+    : 15;
+  const normalized = allWords.map(word => word.toLowerCase());
+  const repeats = normalized.length - new Set(normalized).size;
+  return {
+    wordCount: allWords.length,
+    variation,
+    repeated: Math.min(100, Math.round(repeats / Math.max(normalized.length, 1) * 180)),
+    lengthScore: Math.min(100, Math.round(allWords.length / 3))
+  };
+}
+
+function addCount(counts, feature, vocabulary) {
+  const index = vocabulary[feature];
+  if (index !== undefined) counts.set(index, (counts.get(index) || 0) + 1);
+}
+
+function contribution(counts, vector, offset, coefficients) {
+  let normSquared = 0;
+  const weighted = [];
+  counts.forEach((count, index) => {
+    const value = (1 + Math.log(count)) * vector.idf[index];
+    weighted.push([index, value]);
+    normSquared += value * value;
+  });
+  const norm = Math.sqrt(normSquared) || 1;
+  return weighted.reduce((total, item) => total + (item[1] / norm) * coefficients[offset + item[0]], 0);
+}
+
+function browserLikelihood(value) {
+  const model = state.model;
+  const tokens = words(value.toLowerCase()).filter(word => word.length >= 2);
+  const wordCounts = new Map();
+  for (let index = 0; index < tokens.length; index += 1) {
+    addCount(wordCounts, tokens[index], model.word.vocabulary);
+    if (index < tokens.length - 1) addCount(wordCounts, tokens[index] + ' ' + tokens[index + 1], model.word.vocabulary);
+  }
+
+  const charCounts = new Map();
+  for (const token of tokens) {
+    const padded = ' ' + token + ' ';
+    for (let n = 3; n <= 5; n += 1) {
+      for (let index = 0; index <= padded.length - n; index += 1) {
+        addCount(charCounts, padded.slice(index, index + n), model.char.vocabulary);
+      }
+    }
+  }
+
+  const score = model.intercept
+    + contribution(wordCounts, model.word, 0, model.coefficients)
+    + contribution(charCounts, model.char, model.word.idf.length, model.coefficients);
+  return Math.round(sigmoid(score) * 1000) / 10;
+}
+
+function showMetrics(metrics) {
+  set('#variation', metrics.variation + '/100');
+  set('#repeat', metrics.repeated + '/100');
+  set('#length', metrics.wordCount + ' words');
+  width('#variationBar', metrics.variation);
+  width('#repeatBar', metrics.repeated);
+  width('#lengthBar', metrics.lengthScore);
+}
+
+async function loadModel() {
+  try {
+    const response = await fetch('artifacts/browser_model.json', { cache: 'no-cache' });
+    if (!response.ok) throw new Error('Model file is not published yet.');
+    state.model = await response.json();
+    state.loading = false;
+    set('#label', 'Private browser model ready.<br/>Add writing to analyse.');
+  } catch (error) {
+    state.loading = false;
+    set('#label', 'Model is not published yet.<br/>Please try again shortly.');
+  }
+}
+
+text.addEventListener('input', () => set('#count', words(text.value).length + ' words'));
+document.querySelector('#sample').onclick = () => {
+  text.value = sample;
+  text.dispatchEvent(new Event('input'));
 };
+
+document.querySelector('#analyse').onclick = () => {
+  const value = text.value.trim();
+  const metrics = metricValues(value);
+  if (metrics.wordCount < 60) {
+    set('#label', 'Please enter at least<br/>60 words first.');
+    return;
+  }
+  if (!state.model) {
+    set('#label', state.loading
+      ? 'Loading the private model.<br/>Try again in a moment.'
+      : 'Model unavailable.<br/>Reload after publishing completes.');
+    return;
+  }
+
+  const likelihood = browserLikelihood(value);
+  set('#score', likelihood + '%');
+  set('#label', likelihood < 35
+    ? 'Lower-signal result<br/>Review, do not conclude.'
+    : likelihood < 65
+      ? 'Mixed signals found<br/>Review with context.'
+      : 'More model-like signals<br/>Review with context.');
+  document.querySelector('#needle').style.left = likelihood + '%';
+  showMetrics(metrics);
+  document.querySelector('#matches').innerHTML =
+    '<article class="match"><span class="tag">Not a source search</span><b>Similarity checking is separate</b><p>This private browser analysis does not search the web or any private plagiarism database. Check citations and sources separately.</p></article>';
+};
+
+loadModel();
+
 </script>
 </body></html>
