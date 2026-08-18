@@ -7,6 +7,9 @@
   <title>MeronChecker — Writing insight, not accusation</title>
   <style>
     :root{--ink:#eef3ff;--muted:#9aabc2;--line:#26354c;--bg:#07101d;--panel:#0d1828;--panel2:#111f34;--violet:#8e6bff;--cyan:#52e4d4;--amber:#ffcb6b;--danger:#ff7676}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 75% -10%,#35205b 0,transparent 35%),var(--bg);color:var(--ink);font:15px Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,textarea{font:inherit}.shell{max-width:1180px;margin:auto;padding:24px}.nav{display:flex;justify-content:space-between;align-items:center;padding:8px 0 46px}.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.04em;font-size:21px}.mark{width:28px;height:28px;border:2px solid var(--cyan);border-radius:9px;display:grid;place-items:center;color:var(--cyan);font-size:14px}.nav span{color:var(--muted);font-size:13px}.hero{max-width:780px;margin:26px auto 44px;text-align:center}.eyebrow{color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.hero h1{font-size:clamp(38px,7vw,68px);line-height:.98;letter-spacing:-.065em;margin:15px 0 19px}.hero h1 em{font-style:normal;color:#a78dff}.hero p{margin:auto;max-width:620px;color:var(--muted);line-height:1.7}.workspace{display:grid;grid-template-columns:1.25fr .75fr;gap:18px}.card{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#101c2e,#0a1422);box-shadow:0 16px 50px #0002}.editor{padding:18px}.editor-head,.actions,.metric-head{display:flex;align-items:center;justify-content:space-between;gap:14px}.editor-head b{font-size:14px}.editor-head span{color:var(--muted);font-size:12px}.editor textarea{width:100%;min-height:290px;resize:vertical;margin:14px 0;border:1px solid #31425e;border-radius:12px;background:#08111e;color:var(--ink);padding:16px;line-height:1.65;outline:none}.editor textarea:focus{border-color:#8e6bff;box-shadow:0 0 0 3px #8e6bff22}.primary,.ghost{border:0;border-radius:10px;padding:11px 15px;cursor:pointer;font-weight:750;font-size:13px}.primary{color:#08111e;background:linear-gradient(120deg,#66eedf,#89a0ff)}.ghost{color:var(--ink);border:1px solid #3b4b66;background:transparent}.notice{display:flex;gap:10px;margin-top:15px;padding:12px;border-radius:10px;background:#172640;color:#cbd6ea;font-size:12px;line-height:1.5}.notice strong{color:var(--amber)}.results{padding:18px}.results h2{font-size:14px;margin:0}.meter{position:relative;height:10px;margin:17px 0 10px;border-radius:99px;background:linear-gradient(90deg,#52e4d4,#ffcb6b,#ff7676)}.needle{position:absolute;top:-6px;left:10%;width:4px;height:22px;border-radius:5px;background:#fff;box-shadow:0 0 0 3px #08111e}.score-row{display:flex;align-items:end;justify-content:space-between}.score{font-size:52px;font-weight:850;letter-spacing:-.08em}.score-label{color:var(--muted);font-size:12px;text-align:right;line-height:1.5}.metrics{display:grid;gap:10px;margin-top:24px}.metric{padding:13px;border:1px solid #273853;border-radius:12px;background:#0a1422}.metric-head{font-size:12px}.metric-head span{color:var(--muted)}.bar{height:4px;margin-top:10px;border-radius:9px;background:#23334b}.bar i{display:block;height:100%;width:0;border-radius:inherit;background:var(--violet);transition:width .4s}.similarity{grid-column:1/-1;padding:22px}.similarity h2{margin:0 0 7px;font-size:18px}.similarity>p{margin:0 0 18px;color:var(--muted);font-size:13px;line-height:1.6}.matches{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.match{min-height:108px;padding:14px;border:1px solid #293950;border-radius:12px;background:#0a1422}.tag{display:inline-block;padding:4px 7px;border-radius:5px;background:#28394f;color:#b9c9df;font-size:10px;font-weight:700}.match b{display:block;margin:12px 0 5px;font-size:13px}.match p{margin:0;color:var(--muted);font-size:11px;line-height:1.45}.methods{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin:26px 0}.method{padding:17px;border-top:1px solid #34445f}.method b{color:var(--cyan);font-size:12px}.method p{margin:7px 0 0;color:var(--muted);font-size:12px;line-height:1.55}footer{padding:18px 0 5px;color:#71839e;font-size:12px;text-align:center}@media(max-width:760px){.shell{padding:18px}.nav{padding-bottom:20px}.nav span{display:none}.workspace{grid-template-columns:1fr}.similarity{grid-column:auto}.matches,.methods{grid-template-columns:1fr}.editor textarea{min-height:230px}.hero{margin-top:15px}.score{font-size:45px}}
+  
+.mode-tabs{display:flex;gap:7px;padding:5px;margin-bottom:18px;border:1px solid #2d405c;border-radius:12px;background:#091422}.mode-tab{flex:1;border:0;border-radius:8px;padding:9px 8px;background:transparent;color:var(--muted);font-weight:750;font-size:12px;cursor:pointer}.mode-tab.active{background:#293c5a;color:#fff}.mode-panel{display:none}.mode-panel.active{display:block}.source-intro{color:var(--muted);font-size:12px;line-height:1.6;margin:8px 0 16px}.source-list{display:grid;gap:10px}.source-query{padding:13px;border:1px solid #293950;border-radius:12px;background:#0a1422}.source-query b{display:block;font-size:12px;line-height:1.45;margin-bottom:10px}.source-links{display:flex;gap:8px;flex-wrap:wrap}.source-link{display:inline-flex;text-decoration:none;border:1px solid #435773;border-radius:7px;padding:6px 8px;color:#dce5f6;font-size:11px;font-weight:700}.source-link:hover{border-color:var(--cyan);color:var(--cyan)}.privacy-note{margin-top:15px;padding:10px;border-left:2px solid var(--amber);background:#18233a;color:#cbd6ea;font-size:11px;line-height:1.55}.source-empty{padding:16px;border:1px dashed #34445f;border-radius:12px;color:var(--muted);font-size:12px;line-height:1.55}
+
   </style>
 </head>
 <body>
@@ -20,16 +23,28 @@
         <div class="actions"><button class="ghost" id="sample">Use sample</button><button class="primary" id="analyse">Analyse writing</button></div>
         <div class="notice"><strong>Important</strong><span>MeronChecker does not decide misconduct. Do not submit private, confidential, or graded work to third-party checkers without permission.</span></div>
       </div>
-      <aside class="card results" aria-live="polite">
-        <h2>AI-writing likelihood</h2><div class="meter"><i class="needle" id="needle"></i></div>
-        <div class="score-row"><div class="score" id="score">—</div><div class="score-label" id="label">Add text to see<br/>a prototype estimate.</div></div>
-        <div class="metrics">
-          <div class="metric"><div class="metric-head"><b>Sentence variation</b><span id="variation">—</span></div><div class="bar"><i id="variationBar"></i></div></div>
-          <div class="metric"><div class="metric-head"><b>Repeated phrasing</b><span id="repeat">—</span></div><div class="bar"><i id="repeatBar"></i></div></div>
-          <div class="metric"><div class="metric-head"><b>Writing length</b><span id="length">—</span></div><div class="bar"><i id="lengthBar"></i></div></div>
-        </div>
-      </aside>
-      <section class="card similarity"><h2>Potential phrase overlaps</h2><p>This prototype shows a review layout. Production matching will use allowed public sources and always show links, rather than claiming a complete plagiarism database.</p><div class="matches" id="matches"><article class="match"><span class="tag">Awaiting text</span><b>No source check yet</b><p>Run an analysis to see candidate phrases for review.</p></article></div></section>
+      
+<aside class="card results" aria-live="polite">
+  <div class="mode-tabs" role="tablist" aria-label="Analysis results">
+    <button class="mode-tab active" type="button" data-mode="ai">AI Detector</button>
+    <button class="mode-tab" type="button" data-mode="sources">Plagiarism Checker</button>
+  </div>
+  <section class="mode-panel active" id="aiPanel" role="tabpanel">
+    <h2>AI-writing likelihood</h2><div class="meter"><i class="needle" id="needle"></i></div>
+    <div class="score-row"><div class="score" id="score">—</div><div class="score-label" id="label">Loading private<br/>browser model…</div></div>
+    <div class="metrics">
+      <div class="metric"><div class="metric-head"><b>Sentence variation</b><span id="variation">—</span></div><div class="bar"><i id="variationBar"></i></div></div>
+      <div class="metric"><div class="metric-head"><b>Repeated phrasing</b><span id="repeat">—</span></div><div class="bar"><i id="repeatBar"></i></div></div>
+      <div class="metric"><div class="metric-head"><b>Writing length</b><span id="length">—</span></div><div class="bar"><i id="lengthBar"></i></div></div>
+    </div>
+    <div class="privacy-note">This indicator runs locally in your browser. It does not prove AI use or misconduct.</div>
+  </section>
+  <section class="mode-panel" id="sourcesPanel" role="tabpanel">
+    <h2>Plagiarism checker</h2>
+    <p class="source-intro">Review distinctive phrases using public search. It cannot access Turnitin or private databases, and no phrase is sent anywhere until you choose a search link.</p>
+    <div class="source-list" id="sourceQueries"><div class="source-empty">Analyse at least 60 words to prepare public-source searches.</div></div>
+  </section>
+</aside>
     </section>
     <section class="methods"><article class="method"><b>01 · Transparent scoring</b><p>Every indicator is explained. A percentage cannot prove authorship.</p></article><article class="method"><b>02 · Trainable model</b><p>The repository includes a training pipeline and held-out evaluation report.</p></article><article class="method"><b>03 · Cross-checking</b><p>Compare test samples with permitted external tools; never treat agreement as certainty.</p></article></section>
     <footer>MeronChecker · Built for learning and careful review.</footer>
@@ -40,47 +55,39 @@ const text = document.querySelector('#text');
 const count = document.querySelector('#count');
 const sample = 'Artificial intelligence is changing how people work, study, and communicate. It can help people organise ideas, but every writer should review information carefully. Good writing still needs clear evidence, accurate citations, and a personal point of view.';
 const state = { model: null, loading: true };
-
 const words = value => value.trim().match(/[A-Za-zÀ-ÿ0-9_']+/g) || [];
 const set = (selector, value) => { document.querySelector(selector).textContent = value; };
 const width = (selector, value) => { document.querySelector(selector).style.width = value + '%'; };
 const sigmoid = value => 1 / (1 + Math.exp(-Math.max(-30, Math.min(30, value))));
+
+function selectMode(mode) {
+  document.querySelectorAll('.mode-tab').forEach(button => button.classList.toggle('active', button.dataset.mode === mode));
+  document.querySelector('#aiPanel').classList.toggle('active', mode === 'ai');
+  document.querySelector('#sourcesPanel').classList.toggle('active', mode === 'sources');
+}
+document.querySelectorAll('.mode-tab').forEach(button => button.onclick = () => selectMode(button.dataset.mode));
 
 function metricValues(value) {
   const allWords = words(value);
   const sentences = value.split(/[.!?]+/).filter(part => words(part).length > 2);
   const lengths = sentences.map(part => words(part).length);
   const mean = lengths.length ? lengths.reduce((a, b) => a + b, 0) / lengths.length : 0;
-  const variation = lengths.length > 1
-    ? Math.min(100, Math.round(Math.sqrt(lengths.reduce((a, b) => a + (b - mean) ** 2, 0) / lengths.length) * 9))
-    : 15;
+  const variation = lengths.length > 1 ? Math.min(100, Math.round(Math.sqrt(lengths.reduce((a, b) => a + (b - mean) ** 2, 0) / lengths.length) * 9)) : 15;
   const normalized = allWords.map(word => word.toLowerCase());
   const repeats = normalized.length - new Set(normalized).size;
-  return {
-    wordCount: allWords.length,
-    variation,
-    repeated: Math.min(100, Math.round(repeats / Math.max(normalized.length, 1) * 180)),
-    lengthScore: Math.min(100, Math.round(allWords.length / 3))
-  };
+  return { wordCount: allWords.length, variation, repeated: Math.min(100, Math.round(repeats / Math.max(normalized.length, 1) * 180)), lengthScore: Math.min(100, Math.round(allWords.length / 3)) };
 }
 
 function addCount(counts, feature, vocabulary) {
   const index = vocabulary[feature];
   if (index !== undefined) counts.set(index, (counts.get(index) || 0) + 1);
 }
-
 function contribution(counts, vector, offset, coefficients) {
-  let normSquared = 0;
-  const weighted = [];
-  counts.forEach((count, index) => {
-    const value = (1 + Math.log(count)) * vector.idf[index];
-    weighted.push([index, value]);
-    normSquared += value * value;
-  });
+  let normSquared = 0; const weighted = [];
+  counts.forEach((count, index) => { const value = (1 + Math.log(count)) * vector.idf[index]; weighted.push([index, value]); normSquared += value * value; });
   const norm = Math.sqrt(normSquared) || 1;
   return weighted.reduce((total, item) => total + (item[1] / norm) * coefficients[offset + item[0]], 0);
 }
-
 function browserLikelihood(value) {
   const model = state.model;
   const tokens = words(value.toLowerCase()).filter(word => word.length >= 2);
@@ -89,78 +96,62 @@ function browserLikelihood(value) {
     addCount(wordCounts, tokens[index], model.word.vocabulary);
     if (index < tokens.length - 1) addCount(wordCounts, tokens[index] + ' ' + tokens[index + 1], model.word.vocabulary);
   }
-
   const charCounts = new Map();
   for (const token of tokens) {
     const padded = ' ' + token + ' ';
-    for (let n = 3; n <= 5; n += 1) {
-      for (let index = 0; index <= padded.length - n; index += 1) {
-        addCount(charCounts, padded.slice(index, index + n), model.char.vocabulary);
-      }
-    }
+    for (let n = 3; n <= 5; n += 1) for (let index = 0; index <= padded.length - n; index += 1) addCount(charCounts, padded.slice(index, index + n), model.char.vocabulary);
   }
-
-  const score = model.intercept
-    + contribution(wordCounts, model.word, 0, model.coefficients)
-    + contribution(charCounts, model.char, model.word.idf.length, model.coefficients);
+  const score = model.intercept + contribution(wordCounts, model.word, 0, model.coefficients) + contribution(charCounts, model.char, model.word.idf.length, model.coefficients);
   return Math.round(sigmoid(score) * 1000) / 10;
 }
-
 function showMetrics(metrics) {
-  set('#variation', metrics.variation + '/100');
-  set('#repeat', metrics.repeated + '/100');
-  set('#length', metrics.wordCount + ' words');
-  width('#variationBar', metrics.variation);
-  width('#repeatBar', metrics.repeated);
-  width('#lengthBar', metrics.lengthScore);
+  set('#variation', metrics.variation + '/100'); set('#repeat', metrics.repeated + '/100'); set('#length', metrics.wordCount + ' words');
+  width('#variationBar', metrics.variation); width('#repeatBar', metrics.repeated); width('#lengthBar', metrics.lengthScore);
+}
+function sourcePhrases(value) {
+  const candidates = value.split(/[.!?]+/).map(item => item.trim()).filter(item => words(item).length >= 9 && words(item).length <= 34);
+  const seen = new Set();
+  return candidates.sort((a, b) => words(b).length - words(a).length).filter(item => {
+    const key = item.toLowerCase();
+    if (seen.has(key)) return false; seen.add(key); return true;
+  }).slice(0, 4).map(item => item.length > 180 ? item.slice(0, 177) + '…' : item);
+}
+function prepareSourceSearches(value) {
+  const phrases = sourcePhrases(value);
+  const target = document.querySelector('#sourceQueries');
+  if (!phrases.length) {
+    target.innerHTML = '<div class="source-empty">No suitable complete phrase was found. Add a longer paragraph, then analyse again.</div>';
+    return;
+  }
+  target.innerHTML = phrases.map((phrase, index) => {
+    const query = encodeURIComponent('"' + phrase + '"');
+    return '<article class="source-query"><b>' + (index + 1) + '. “' + phrase.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '”</b><div class="source-links"><a class="source-link" target="_blank" rel="noopener noreferrer" href="https://www.google.com/search?q=' + query + '">Search Google</a><a class="source-link" target="_blank" rel="noopener noreferrer" href="https://www.bing.com/search?q=' + query + '">Search Bing</a></div></article>';
+  }).join('');
 }
 
 async function loadModel() {
   try {
     const response = await fetch('artifacts/browser_model.json', { cache: 'no-cache' });
     if (!response.ok) throw new Error('Model file is not published yet.');
-    state.model = await response.json();
+    state.model = await response.json(); state.loading = false;
+    document.querySelector('#label').innerHTML = 'Private browser model ready.<br/>Add writing to analyse.';
+  } catch {
     state.loading = false;
-    set('#label', 'Private browser model ready.<br/>Add writing to analyse.');
-  } catch (error) {
-    state.loading = false;
-    set('#label', 'Model is not published yet.<br/>Please try again shortly.');
+    document.querySelector('#label').innerHTML = 'Model is not published yet.<br/>Please try again shortly.';
   }
 }
-
 text.addEventListener('input', () => set('#count', words(text.value).length + ' words'));
-document.querySelector('#sample').onclick = () => {
-  text.value = sample;
-  text.dispatchEvent(new Event('input'));
-};
-
+document.querySelector('#sample').onclick = () => { text.value = sample; text.dispatchEvent(new Event('input')); };
 document.querySelector('#analyse').onclick = () => {
-  const value = text.value.trim();
-  const metrics = metricValues(value);
-  if (metrics.wordCount < 60) {
-    set('#label', 'Please enter at least<br/>60 words first.');
-    return;
-  }
-  if (!state.model) {
-    set('#label', state.loading
-      ? 'Loading the private model.<br/>Try again in a moment.'
-      : 'Model unavailable.<br/>Reload after publishing completes.');
-    return;
-  }
-
+  const value = text.value.trim(), metrics = metricValues(value);
+  if (metrics.wordCount < 60) { document.querySelector('#label').innerHTML = 'Please enter at least<br/>60 words first.'; return; }
+  if (!state.model) { document.querySelector('#label').innerHTML = state.loading ? 'Loading the private model.<br/>Try again in a moment.' : 'Model unavailable.<br/>Reload after publishing completes.'; return; }
   const likelihood = browserLikelihood(value);
   set('#score', likelihood + '%');
-  set('#label', likelihood < 35
-    ? 'Lower-signal result<br/>Review, do not conclude.'
-    : likelihood < 65
-      ? 'Mixed signals found<br/>Review with context.'
-      : 'More model-like signals<br/>Review with context.');
+  document.querySelector('#label').innerHTML = likelihood < 35 ? 'Lower-signal result<br/>Review, do not conclude.' : likelihood < 65 ? 'Mixed signals found<br/>Review with context.' : 'More model-like signals<br/>Review with context.';
   document.querySelector('#needle').style.left = likelihood + '%';
-  showMetrics(metrics);
-  document.querySelector('#matches').innerHTML =
-    '<article class="match"><span class="tag">Not a source search</span><b>Similarity checking is separate</b><p>This private browser analysis does not search the web or any private plagiarism database. Check citations and sources separately.</p></article>';
+  showMetrics(metrics); prepareSourceSearches(value); selectMode('ai');
 };
-
 loadModel();
 
 </script>
