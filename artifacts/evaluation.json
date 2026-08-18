@@ -1,25 +1,56 @@
 {
-  "dataset": "Hello-SimpleAI/HC3 (public, streamed JSONL)",
-  "classes": {
-    "0": "human",
-    "1": "AI"
-  },
-  "train_examples": 9600,
-  "test_examples": 2400,
-  "accuracy": 0.9992,
-  "ai_precision": 1.0,
-  "ai_recall": 0.9983,
-  "ai_f1": 0.9992,
-  "confusion_matrix": [
-    [
-      1200,
-      0
-    ],
-    [
-      2,
-      1198
-    ]
+  "version": "baseline-0.2.0",
+  "training_sources": [
+    "Hello-SimpleAI/HC3 (public streamed JSONL)",
+    "silentone0725/ai-human-text-detection-v1 train split (public labelled dataset)"
   ],
+  "training_examples": 16000,
+  "internal_validation": {
+    "dataset": "Mixed held-out split from the two training sources",
+    "classes": {
+      "0": "human",
+      "1": "AI"
+    },
+    "examples": 4000,
+    "accuracy": 0.9902,
+    "ai_precision": 0.9847,
+    "ai_recall": 0.996,
+    "ai_f1": 0.9903,
+    "confusion_matrix": [
+      [
+        1969,
+        31
+      ],
+      [
+        8,
+        1992
+      ]
+    ],
+    "warning": "This random held-out score may be optimistic because it resembles training data."
+  },
+  "external_evaluation": {
+    "dataset": "silentone0725/ai-human-text-detection-v1 test split (not used for training)",
+    "classes": {
+      "0": "human",
+      "1": "AI"
+    },
+    "examples": 4000,
+    "accuracy": 0.9812,
+    "ai_precision": 0.9702,
+    "ai_recall": 0.993,
+    "ai_f1": 0.9815,
+    "confusion_matrix": [
+      [
+        1939,
+        61
+      ],
+      [
+        14,
+        1986
+      ]
+    ],
+    "warning": "This is a stronger check than the internal split, but still does not establish universal real-world accuracy."
+  },
   "browser_export": "artifacts/browser_model.json",
-  "warning": "This score applies only to this held-out dataset. It is not a claim of real-world accuracy."
+  "responsible_use": "AI-likelihood is an indicator, not proof of AI use or academic misconduct."
 }
