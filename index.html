@@ -8,7 +8,7 @@
   <style>
     :root{--ink:#eef3ff;--muted:#9aabc2;--line:#26354c;--bg:#07101d;--panel:#0d1828;--panel2:#111f34;--violet:#8e6bff;--cyan:#52e4d4;--amber:#ffcb6b;--danger:#ff7676}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 75% -10%,#35205b 0,transparent 35%),var(--bg);color:var(--ink);font:15px Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,textarea{font:inherit}.shell{max-width:1180px;margin:auto;padding:24px}.nav{display:flex;justify-content:space-between;align-items:center;padding:8px 0 46px}.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.04em;font-size:21px}.mark{width:28px;height:28px;border:2px solid var(--cyan);border-radius:9px;display:grid;place-items:center;color:var(--cyan);font-size:14px}.nav span{color:var(--muted);font-size:13px}.hero{max-width:780px;margin:26px auto 44px;text-align:center}.eyebrow{color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.hero h1{font-size:clamp(38px,7vw,68px);line-height:.98;letter-spacing:-.065em;margin:15px 0 19px}.hero h1 em{font-style:normal;color:#a78dff}.hero p{margin:auto;max-width:620px;color:var(--muted);line-height:1.7}.workspace{display:grid;grid-template-columns:1.25fr .75fr;gap:18px}.card{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#101c2e,#0a1422);box-shadow:0 16px 50px #0002}.editor{padding:18px}.editor-head,.actions,.metric-head{display:flex;align-items:center;justify-content:space-between;gap:14px}.editor-head b{font-size:14px}.editor-head span{color:var(--muted);font-size:12px}.editor textarea{width:100%;min-height:290px;resize:vertical;margin:14px 0;border:1px solid #31425e;border-radius:12px;background:#08111e;color:var(--ink);padding:16px;line-height:1.65;outline:none}.editor textarea:focus{border-color:#8e6bff;box-shadow:0 0 0 3px #8e6bff22}.primary,.ghost{border:0;border-radius:10px;padding:11px 15px;cursor:pointer;font-weight:750;font-size:13px}.primary{color:#08111e;background:linear-gradient(120deg,#66eedf,#89a0ff)}.ghost{color:var(--ink);border:1px solid #3b4b66;background:transparent}.notice{display:flex;gap:10px;margin-top:15px;padding:12px;border-radius:10px;background:#172640;color:#cbd6ea;font-size:12px;line-height:1.5}.notice strong{color:var(--amber)}.results{padding:18px}.results h2{font-size:14px;margin:0}.meter{position:relative;height:10px;margin:17px 0 10px;border-radius:99px;background:linear-gradient(90deg,#52e4d4,#ffcb6b,#ff7676)}.needle{position:absolute;top:-6px;left:10%;width:4px;height:22px;border-radius:5px;background:#fff;box-shadow:0 0 0 3px #08111e}.score-row{display:flex;align-items:end;justify-content:space-between}.score{font-size:52px;font-weight:850;letter-spacing:-.08em}.score-label{color:var(--muted);font-size:12px;text-align:right;line-height:1.5}.metrics{display:grid;gap:10px;margin-top:24px}.metric{padding:13px;border:1px solid #273853;border-radius:12px;background:#0a1422}.metric-head{font-size:12px}.metric-head span{color:var(--muted)}.bar{height:4px;margin-top:10px;border-radius:9px;background:#23334b}.bar i{display:block;height:100%;width:0;border-radius:inherit;background:var(--violet);transition:width .4s}.similarity{grid-column:1/-1;padding:22px}.similarity h2{margin:0 0 7px;font-size:18px}.similarity>p{margin:0 0 18px;color:var(--muted);font-size:13px;line-height:1.6}.matches{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.match{min-height:108px;padding:14px;border:1px solid #293950;border-radius:12px;background:#0a1422}.tag{display:inline-block;padding:4px 7px;border-radius:5px;background:#28394f;color:#b9c9df;font-size:10px;font-weight:700}.match b{display:block;margin:12px 0 5px;font-size:13px}.match p{margin:0;color:var(--muted);font-size:11px;line-height:1.45}.methods{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin:26px 0}.method{padding:17px;border-top:1px solid #34445f}.method b{color:var(--cyan);font-size:12px}.method p{margin:7px 0 0;color:var(--muted);font-size:12px;line-height:1.55}footer{padding:18px 0 5px;color:#71839e;font-size:12px;text-align:center}@media(max-width:760px){.shell{padding:18px}.nav{padding-bottom:20px}.nav span{display:none}.workspace{grid-template-columns:1fr}.similarity{grid-column:auto}.matches,.methods{grid-template-columns:1fr}.editor textarea{min-height:230px}.hero{margin-top:15px}.score{font-size:45px}}
   
-.mode-tabs{display:flex;gap:7px;padding:5px;margin-bottom:18px;border:1px solid #2d405c;border-radius:12px;background:#091422}.mode-tab{flex:1;border:0;border-radius:8px;padding:9px 8px;background:transparent;color:var(--muted);font-weight:750;font-size:12px;cursor:pointer}.mode-tab.active{background:#293c5a;color:#fff}.mode-panel{display:none}.mode-panel.active{display:block}.source-intro{color:var(--muted);font-size:12px;line-height:1.6;margin:8px 0 16px}.source-list{display:grid;gap:10px}.source-query{padding:13px;border:1px solid #293950;border-radius:12px;background:#0a1422}.source-query b{display:block;font-size:12px;line-height:1.45;margin-bottom:10px}.source-links{display:flex;gap:8px;flex-wrap:wrap}.source-link{display:inline-flex;text-decoration:none;border:1px solid #435773;border-radius:7px;padding:6px 8px;color:#dce5f6;font-size:11px;font-weight:700}.source-link:hover{border-color:var(--cyan);color:var(--cyan)}.privacy-note{margin-top:15px;padding:10px;border-left:2px solid var(--amber);background:#18233a;color:#cbd6ea;font-size:11px;line-height:1.55}.source-empty{padding:16px;border:1px dashed #34445f;border-radius:12px;color:var(--muted);font-size:12px;line-height:1.55}
+.mode-tabs{display:flex;gap:7px;padding:5px;margin-bottom:18px;border:1px solid #2d405c;border-radius:12px;background:#091422}.mode-tab{flex:1;border:0;border-radius:8px;padding:9px 8px;background:transparent;color:var(--muted);font-weight:750;font-size:12px;cursor:pointer}.mode-tab.active{background:#293c5a;color:#fff}.mode-panel{display:none}.mode-panel.active{display:block}.source-intro{color:var(--muted);font-size:12px;line-height:1.6;margin:8px 0 16px}.source-list{display:grid;gap:10px}.source-query{padding:13px;border:1px solid #293950;border-radius:12px;background:#0a1422}.source-query b{display:block;font-size:12px;line-height:1.45;margin-bottom:10px}.source-links{display:flex;gap:8px;flex-wrap:wrap}.source-link{display:inline-flex;text-decoration:none;border:1px solid #435773;border-radius:7px;padding:6px 8px;color:#dce5f6;font-size:11px;font-weight:700}.source-link:hover{border-color:var(--cyan);color:var(--cyan)}.privacy-note{margin-top:15px;padding:10px;border-left:2px solid var(--amber);background:#18233a;color:#cbd6ea;font-size:11px;line-height:1.55}.source-empty{padding:16px;border:1px dashed #34445f;border-radius:12px;color:var(--muted);font-size:12px;line-height:1.55}.source-status{padding:14px;border:1px solid #304866;border-radius:12px;background:#0b1727;color:#cbd6ea;font-size:12px;line-height:1.55}.source-score{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 0 16px;padding:12px;border-radius:12px;background:#172640}.source-score b{font-size:22px;letter-spacing:-.05em}.source-score span{color:var(--muted);font-size:11px;text-align:right;line-height:1.45}.source-result{padding:14px;border:1px solid #293950;border-radius:12px;background:#0a1422}.source-result-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.source-result b{font-size:12px;line-height:1.4}.source-result small{display:block;margin-top:5px;color:var(--muted);font-size:10px}.source-badge{flex:0 0 auto;padding:4px 6px;border-radius:6px;background:#354660;color:#e8efff;font-weight:800;font-size:10px}.source-result p{margin:10px 0 0;color:#cbd6ea;font-size:11px;line-height:1.55}.source-result a{display:inline-block;margin-top:10px;color:var(--cyan);font-size:11px;font-weight:700;text-decoration:none}.source-result a:hover{text-decoration:underline}.consent{display:flex;gap:8px;align-items:flex-start;margin:12px 0 0;color:#b8c7dc;font-size:11px;line-height:1.45}.consent input{margin-top:2px;accent-color:var(--cyan)}
 
   </style>
 </head>
@@ -21,6 +21,7 @@
         <div class="editor-head"><b>Paste writing to analyse</b><span id="count">0 words</span></div>
         <textarea id="text" aria-label="Writing to analyse" placeholder="Paste at least a paragraph here..."></textarea>
         <div class="actions"><button class="ghost" id="sample">Use sample</button><button class="primary" id="analyse">Analyse writing</button></div>
+        <label class="consent"><input id="sourceConsent" type="checkbox" /><span>Run automatic public-source check too. Selected phrases will be searched using OpenAlex, a public academic index.</span></label>
         <div class="notice"><strong>Important</strong><span>MeronChecker does not decide misconduct. Do not submit private, confidential, or graded work to third-party checkers without permission.</span></div>
       </div>
       
@@ -40,9 +41,9 @@
     <div class="privacy-note">This indicator runs locally in your browser. It does not prove AI use or misconduct.</div>
   </section>
   <section class="mode-panel" id="sourcesPanel" role="tabpanel">
-    <h2>Plagiarism checker</h2>
-    <p class="source-intro">Review distinctive phrases using public search. It cannot access Turnitin or private databases, and no phrase is sent anywhere until you choose a search link.</p>
-    <div class="source-list" id="sourceQueries"><div class="source-empty">Analyse at least 60 words to prepare public-source searches.</div></div>
+    <h2>Source similarity</h2>
+    <p class="source-intro">Automatically checks selected phrases against OpenAlex’s public academic index and shows possible exact overlaps. This is not Turnitin: it cannot check private student papers, subscription journals, or every web page.</p>
+    <div class="source-list" id="sourceQueries"><div class="source-empty">Enable the automatic public-source check, then analyse at least 60 words.</div></div>
   </section>
 </aside>
     </section>
@@ -108,25 +109,83 @@ function showMetrics(metrics) {
   set('#variation', metrics.variation + '/100'); set('#repeat', metrics.repeated + '/100'); set('#length', metrics.wordCount + ' words');
   width('#variationBar', metrics.variation); width('#repeatBar', metrics.repeated); width('#lengthBar', metrics.lengthScore);
 }
+function escapeHtml(value) {
+  return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
 function sourcePhrases(value) {
   const candidates = value.split(/[.!?]+/).map(item => item.trim()).filter(item => words(item).length >= 9 && words(item).length <= 34);
   const seen = new Set();
   return candidates.sort((a, b) => words(b).length - words(a).length).filter(item => {
     const key = item.toLowerCase();
     if (seen.has(key)) return false; seen.add(key); return true;
-  }).slice(0, 4).map(item => item.length > 180 ? item.slice(0, 177) + '…' : item);
+  }).slice(0, 3).map(item => item.length > 180 ? item.slice(0, 177) + '…' : item);
 }
-function prepareSourceSearches(value) {
-  const phrases = sourcePhrases(value);
+function restoreAbstract(index) {
+  if (!index || typeof index !== 'object') return '';
+  const positions = [];
+  Object.entries(index).forEach(([term, slots]) => (slots || []).forEach(position => { positions[position] = term; }));
+  return positions.join(' ');
+}
+function longestExactRun(submission, source) {
+  const left = words(submission.toLowerCase()), right = words(source.toLowerCase());
+  const locations = new Map();
+  right.forEach((token, index) => { if (!locations.has(token)) locations.set(token, []); locations.get(token).push(index); });
+  let best = { length: 0, phrase: '' };
+  left.forEach((token, index) => {
+    (locations.get(token) || []).forEach(matchIndex => {
+      let length = 0;
+      while (index + length < left.length && matchIndex + length < right.length && left[index + length] === right[matchIndex + length]) length += 1;
+      if (length > best.length) best = { length, phrase: left.slice(index, index + length).join(' ') };
+    });
+  });
+  return best;
+}
+function sourceUrl(work) {
+  const doi = work.doi ? String(work.doi).replace(/^https?:\/\/doi\.org\//, '') : '';
+  return doi ? 'https://doi.org/' + doi : (work.primary_location && work.primary_location.landing_page_url) || work.id || '#';
+}
+function renderSourceReport(submission, works) {
   const target = document.querySelector('#sourceQueries');
-  if (!phrases.length) {
-    target.innerHTML = '<div class="source-empty">No suitable complete phrase was found. Add a longer paragraph, then analyse again.</div>';
+  const candidates = works.map(work => {
+    const sourceText = [work.display_name || '', restoreAbstract(work.abstract_inverted_index)].join(' ');
+    const match = longestExactRun(submission, sourceText);
+    const sourceWords = words(sourceText).length;
+    const percentage = match.length >= 5 && sourceWords ? Math.min(100, Math.round((match.length / Math.max(5, words(submission).length)) * 1000) / 10) : 0;
+    return { work, match, percentage };
+  }).filter(item => item.work && item.work.display_name).sort((a, b) => b.match.length - a.match.length).slice(0, 6);
+  const matchedWords = candidates.reduce((total, item) => total + (item.match.length >= 5 ? item.match.length : 0), 0);
+  const overall = Math.min(100, Math.round((matchedWords / Math.max(1, words(submission).length)) * 100));
+  const resultCards = candidates.length ? candidates.map(({work, match, percentage}) => {
+    const author = work.authorships && work.authorships[0] && work.authorships[0].author ? work.authorships[0].author.display_name : 'Public academic source';
+    const detail = match.length >= 5 ? 'Possible exact overlap: “' + escapeHtml(match.phrase) + '” (' + match.length + ' words)' : 'Retrieved as a related public source; no 5-word exact overlap was found in the available title or abstract.';
+    return '<article class="source-result"><div class="source-result-head"><div><b>' + escapeHtml(work.display_name) + '</b><small>' + escapeHtml(author) + (work.publication_year ? ' · ' + work.publication_year : '') + '</small></div><span class="source-badge">' + percentage + '%</span></div><p>' + detail + '</p><a target="_blank" rel="noopener noreferrer" href="' + escapeHtml(sourceUrl(work)) + '">Open source ↗</a></article>';
+  }).join('') : '<div class="source-empty">No public academic sources were returned. This does not mean the writing has no overlap elsewhere.</div>';
+  target.innerHTML = '<div class="source-score"><b>' + overall + '%</b><span>Public-source overlap<br/>from retrieved sources</span></div>' + resultCards + '<div class="privacy-note">Coverage: OpenAlex public academic metadata and available abstracts only. This score is not a plagiarism decision and cannot cover Turnitin’s private repository.</div>';
+}
+async function runSourceCheck(value) {
+  const target = document.querySelector('#sourceQueries');
+  if (!document.querySelector('#sourceConsent').checked) {
+    target.innerHTML = '<div class="source-empty">Automatic public-source checking is off. Tick “Run automatic public-source check too”, then analyse again. This protects your writing from being sent to an external index without your choice.</div>';
     return;
   }
-  target.innerHTML = phrases.map((phrase, index) => {
-    const query = encodeURIComponent('"' + phrase + '"');
-    return '<article class="source-query"><b>' + (index + 1) + '. “' + phrase.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '”</b><div class="source-links"><a class="source-link" target="_blank" rel="noopener noreferrer" href="https://www.google.com/search?q=' + query + '">Search Google</a><a class="source-link" target="_blank" rel="noopener noreferrer" href="https://www.bing.com/search?q=' + query + '">Search Bing</a></div></article>';
-  }).join('');
+  const phrases = sourcePhrases(value);
+  if (!phrases.length) {
+    target.innerHTML = '<div class="source-empty">No suitable complete phrase was found. Add a longer paragraph and analyse again.</div>';
+    return;
+  }
+  target.innerHTML = '<div class="source-status">Checking public academic sources automatically…</div>';
+  try {
+    const responses = await Promise.all(phrases.map(phrase => fetch('https://api.openalex.org/works?per-page=3&select=id,display_name,authorships,publication_year,doi,abstract_inverted_index,primary_location&search=' + encodeURIComponent(phrase))));
+    const payloads = await Promise.all(responses.map(async response => {
+      if (!response.ok) throw new Error('Public index unavailable');
+      return response.json();
+    }));
+    const unique = new Map();
+    payloads.flatMap(payload => payload.results || []).forEach(work => unique.set(work.id, work));
+    renderSourceReport(value, [...unique.values()]);
+  } catch {
+    target.innerHTML = '<div class="source-empty">The public source index could not be reached right now. AI detection still ran privately in your browser; try the source check again later.</div>';
+  }
 }
 
 async function loadModel() {
@@ -150,7 +209,7 @@ document.querySelector('#analyse').onclick = () => {
   set('#score', likelihood + '%');
   document.querySelector('#label').innerHTML = likelihood < 35 ? 'Lower-signal result<br/>Review, do not conclude.' : likelihood < 65 ? 'Mixed signals found<br/>Review with context.' : 'More model-like signals<br/>Review with context.';
   document.querySelector('#needle').style.left = likelihood + '%';
-  showMetrics(metrics); prepareSourceSearches(value); selectMode('ai');
+  showMetrics(metrics); runSourceCheck(value); selectMode(document.querySelector('#sourceConsent').checked ? 'sources' : 'ai');
 };
 loadModel();
 
