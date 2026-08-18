@@ -1,6 +1,6 @@
 # MeronChecker
 
-A transparent **AI-writing likelihood and public-source review assistant**. It is a learning project, not a plagiarism verdict tool.
+A transparent **AI-writing likelihood and public-source review assistant**. It is a learning project, not a plagiarism verdict tool. http://meronchecker.meronhyacinth.dpdns.org/
 
 ## What this project does
 
