@@ -80,23 +80,20 @@ def collect_modern_examples(split, per_class):
 
 
 def collect_wikipedia_human(limit):
-    """Collect human-written Wikipedia passages from a manageable public corpus."""
+    """Collect human-written encyclopedia passages for broader style coverage."""
+    rows = load_dataset(
+        "wikimedia/wikipedia", "20231101.en", split="train", streaming=True
+    ).shuffle(seed=RANDOM_SEED, buffer_size=20_000)
     samples = []
-    for split in ("train", "validation", "test"):
-        rows = load_dataset(
-            "Salesforce/wikitext", "wikitext-103-v1", split=split, streaming=True
-        ).shuffle(seed=RANDOM_SEED, buffer_size=10_000)
-        for row in rows:
-            text = normalise(row.get("text", ""))
-            if len(text) >= 350:
-                samples.append(text[:2_000])
-            if len(samples) >= limit:
-                break
-        if len(samples) >= limit:
+    for row in rows:
+        text = normalise(row.get("text", ""))
+        if len(text) >= 350:
+            samples.append(text[:2_000])
+        if len(samples) >= limit * 2:
             break
     samples = take_unique(samples, limit)
     if len(samples) < limit:
-        raise RuntimeError("WikiText stream did not provide enough usable English passages.")
+        raise RuntimeError("Wikipedia stream did not provide enough usable English passages.")
     return samples
 
 def iter_model_responses(row):
@@ -222,7 +219,7 @@ def main():
         "training_sources": [
             "Hello-SimpleAI/HC3",
             "silentone0725/ai-human-text-detection-v1 train split",
-            "Salesforce/wikitext-103-v1 passages",
+            "wikimedia/wikipedia 20231101.en passages",
             "nsp909/MDTA model_responses",
         ],
         "internal_validation": metric_report(y_internal, internal_predictions, "Mixed held-out split from training sources", "This random held-out score may be optimistic because it resembles training data."),
