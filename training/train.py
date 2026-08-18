@@ -49,6 +49,28 @@ def collect_examples():
         raise RuntimeError("HC3 did not provide enough usable English examples.")
     return human[:MAX_PER_CLASS], ai[:MAX_PER_CLASS]
 
+def export_browser_model(features, model):
+    """Export an inspectable model payload for private, in-browser scoring."""
+    word_vectorizer = features.transformer_list[0][1]
+    char_vectorizer = features.transformer_list[1][1]
+    payload = {
+        "version": "baseline-0.1.0",
+        "note": "Runs locally in the browser. It is an indicator, not proof of AI use.",
+        "word": {
+            "vocabulary": word_vectorizer.vocabulary_,
+            "idf": word_vectorizer.idf_.tolist(),
+        },
+        "char": {
+            "vocabulary": char_vectorizer.vocabulary_,
+            "idf": char_vectorizer.idf_.tolist(),
+        },
+        "coefficients": model.coef_[0].tolist(),
+        "intercept": float(model.intercept_[0]),
+    }
+    (MODEL_DIR / "browser_model.json").write_text(
+        json.dumps(payload, separators=(",", ":")), encoding="utf-8"
+    )
+
 def main():
     MODEL_DIR.mkdir(exist_ok=True)
     human, ai = collect_examples()
@@ -78,9 +100,11 @@ def main():
         "ai_recall": round(recall, 4),
         "ai_f1": round(f1, 4),
         "confusion_matrix": confusion_matrix(y_test, predictions).tolist(),
+        "browser_export": "artifacts/browser_model.json",
         "warning": "This score applies only to this held-out dataset. It is not a claim of real-world accuracy.",
     }
     joblib.dump({"features": features, "model": model}, MODEL_DIR / "meronchecker_baseline.joblib")
+    export_browser_model(features, model)
     (MODEL_DIR / "evaluation.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
     print(json.dumps(report, indent=2))
 
