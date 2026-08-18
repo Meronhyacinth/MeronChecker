@@ -1,29 +1,39 @@
 {
-  "version": "baseline-0.2.0",
+  "version": "baseline-0.3.0",
+  "algorithm": "TF-IDF word and character n-grams with balanced logistic regression",
+  "training_examples": 80000,
+  "training_set": {
+    "human": 50000,
+    "ai": 50000,
+    "total": 100000
+  },
   "training_sources": [
-    "Hello-SimpleAI/HC3 (public streamed JSONL)",
-    "silentone0725/ai-human-text-detection-v1 train split (public labelled dataset)"
+    "Hello-SimpleAI/HC3",
+    "silentone0725/ai-human-text-detection-v1 train split",
+    "wikimedia/wikipedia 20231101.en passages",
+    "nsp909/MDTA model_responses"
   ],
-  "training_examples": 16000,
   "internal_validation": {
-    "dataset": "Mixed held-out split from the two training sources",
+    "dataset": "Mixed held-out split from training sources",
     "classes": {
       "0": "human",
       "1": "AI"
     },
-    "examples": 4000,
-    "accuracy": 0.9902,
-    "ai_precision": 0.9847,
-    "ai_recall": 0.996,
-    "ai_f1": 0.9903,
+    "examples": 20000,
+    "accuracy": 0.9911,
+    "ai_precision": 0.9871,
+    "ai_recall": 0.9953,
+    "ai_f1": 0.9912,
+    "human_false_positive_rate": 0.013,
+    "ai_false_negative_rate": 0.0047,
     "confusion_matrix": [
       [
-        1969,
-        31
+        9870,
+        130
       ],
       [
-        8,
-        1992
+        47,
+        9953
       ]
     ],
     "warning": "This random held-out score may be optimistic because it resembles training data."
@@ -35,21 +45,31 @@
       "1": "AI"
     },
     "examples": 4000,
-    "accuracy": 0.9812,
-    "ai_precision": 0.9702,
-    "ai_recall": 0.993,
-    "ai_f1": 0.9815,
+    "accuracy": 0.9653,
+    "ai_precision": 0.945,
+    "ai_recall": 0.988,
+    "ai_f1": 0.966,
+    "human_false_positive_rate": 0.0575,
+    "ai_false_negative_rate": 0.012,
     "confusion_matrix": [
       [
-        1939,
-        61
+        1885,
+        115
       ],
       [
-        14,
-        1986
+        24,
+        1976
       ]
     ],
-    "warning": "This is a stronger check than the internal split, but still does not establish universal real-world accuracy."
+    "warning": "This is stronger than an internal split, but does not establish universal real-world accuracy."
+  },
+  "twenty_test_rounds": {
+    "rounds": 20,
+    "examples_per_round": 2000,
+    "average_accuracy": 0.9659,
+    "lowest_accuracy": 0.9595,
+    "highest_accuracy": 0.9715,
+    "method": "20 reproducible balanced resamples from the held-out external test set; this measures variation, not universal real-world accuracy."
   },
   "browser_export": "artifacts/browser_model.json",
   "responsible_use": "AI-likelihood is an indicator, not proof of AI use or academic misconduct."
