@@ -57,11 +57,11 @@ def export_browser_model(features, model):
         "version": "baseline-0.1.0",
         "note": "Runs locally in the browser. It is an indicator, not proof of AI use.",
         "word": {
-            "vocabulary": word_vectorizer.vocabulary_,
+            "vocabulary": {token: int(index) for token, index in word_vectorizer.vocabulary_.items()},
             "idf": word_vectorizer.idf_.tolist(),
         },
         "char": {
-            "vocabulary": char_vectorizer.vocabulary_,
+            "vocabulary": {token: int(index) for token, index in char_vectorizer.vocabulary_.items()},
             "idf": char_vectorizer.idf_.tolist(),
         },
         "coefficients": model.coef_[0].tolist(),
