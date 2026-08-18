@@ -53,11 +53,9 @@ def collect_hc3_examples():
         ai.extend(text for answer in row.get("chatgpt_answers", []) if len(text := normalise(answer)) >= 120)
         if len(human) >= HC3_PER_CLASS and len(ai) >= HC3_PER_CLASS:
             break
-    human = take_unique(human, HC3_PER_CLASS)
-    ai = take_unique(ai, HC3_PER_CLASS)
     if min(len(human), len(ai)) < HC3_PER_CLASS:
         raise RuntimeError("HC3 did not provide enough usable examples.")
-    return human, ai
+    return human[:HC3_PER_CLASS], ai[:HC3_PER_CLASS]
 
 
 def collect_modern_examples(split, per_class):
