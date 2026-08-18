@@ -20,5 +20,6 @@
       1198
     ]
   ],
+  "browser_export": "artifacts/browser_model.json",
   "warning": "This score applies only to this held-out dataset. It is not a claim of real-world accuracy."
 }
