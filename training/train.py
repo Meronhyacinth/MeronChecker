@@ -1,4 +1,4 @@
-"""Train an inspectable English AI-writing baseline from 250,000 public labelled examples."""
+"""Train an inspectable English AI-writing baseline from 250,000 public examples (60% AI, 40% human)."""
 from pathlib import Path
 import json
 import random
@@ -14,11 +14,12 @@ from sklearn.metrics import accuracy_score, precision_recall_fscore_support, con
 ROOT = Path(__file__).resolve().parents[1]
 MODEL_DIR = ROOT / "artifacts"
 RANDOM_SEED = 42
-TARGET_PER_CLASS = 125_000
+HUMAN_TARGET = 100_000
+AI_TARGET = 150_000
 HC3_PER_CLASS = 6_000
 MODERN_TRAIN_PER_CLASS = 12_000
-WIKIPEDIA_HUMAN = TARGET_PER_CLASS - HC3_PER_CLASS - MODERN_TRAIN_PER_CLASS
-MDTA_AI = TARGET_PER_CLASS - HC3_PER_CLASS - MODERN_TRAIN_PER_CLASS
+WIKIPEDIA_HUMAN = HUMAN_TARGET - HC3_PER_CLASS - MODERN_TRAIN_PER_CLASS
+MDTA_AI = AI_TARGET - HC3_PER_CLASS - MODERN_TRAIN_PER_CLASS
 MDTA_MAX_PER_MODEL = max(1, MDTA_AI // 6)
 EXTERNAL_PER_CLASS = 2_000
 TEST_ROUNDS = 20
@@ -180,7 +181,7 @@ def export_browser_model(features, model):
     word_vectorizer = features.transformer_list[0][1]
     char_vectorizer = features.transformer_list[1][1]
     payload = {
-        "version": "baseline-0.4.4",
+        "version": "baseline-0.4.5",
         "note": "Runs locally in the browser. It is an indicator, not proof of AI use.",
         "word": {"vocabulary": {token: int(index) for token, index in word_vectorizer.vocabulary_.items()}, "idf": word_vectorizer.idf_.tolist()},
         "char": {"vocabulary": {token: int(index) for token, index in char_vectorizer.vocabulary_.items()}, "idf": char_vectorizer.idf_.tolist()},
@@ -199,8 +200,8 @@ def main():
     external_human, external_ai = collect_modern_examples("test", EXTERNAL_PER_CLASS)
 
     texts = hc3_human + modern_human + wikipedia_human + hc3_ai + modern_ai + mdta_ai
-    labels = [0] * TARGET_PER_CLASS + [1] * TARGET_PER_CLASS
-    if len(texts) != TARGET_PER_CLASS * 2 or len(labels) != TARGET_PER_CLASS * 2:
+    labels = [0] * HUMAN_TARGET + [1] * AI_TARGET
+    if len(texts) != HUMAN_TARGET + AI_TARGET or len(labels) != HUMAN_TARGET + AI_TARGET:
         raise RuntimeError("Training set must contain the requested balanced example count.")
 
     x_train, x_internal, y_train, y_internal = train_test_split(
@@ -219,10 +220,10 @@ def main():
     external_predictions = model.predict(features.transform(external_texts))
 
     report = {
-        "version": "baseline-0.4.2",
+        "version": "baseline-0.4.5",
         "algorithm": "TF-IDF word and character n-grams with balanced logistic regression",
         "training_examples": len(x_train),
-        "training_set": {"human": TARGET_PER_CLASS, "ai": TARGET_PER_CLASS, "total": TARGET_PER_CLASS * 2},
+        "training_set": {"human": HUMAN_TARGET, "ai": AI_TARGET, "total": HUMAN_TARGET + AI_TARGET},
         "training_sources": [
             "Hello-SimpleAI/HC3",
             "silentone0725/ai-human-text-detection-v1 train split",
