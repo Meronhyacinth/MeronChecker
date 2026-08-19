@@ -34,6 +34,7 @@ jobs:
           cp index.html public/index.html
           cp CNAME public/CNAME
           cp artifacts/browser_model.json public/artifacts/browser_model.json
+          gzip --best --keep --force public/artifacts/browser_model.json
       - uses: actions/upload-pages-artifact@v3
         with:
           path: public
