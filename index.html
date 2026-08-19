@@ -192,13 +192,22 @@ async function runSourceCheck(value) {
 async function loadModel() {
   const retry = document.querySelector('#modelRetry');
   state.loading = true; retry.hidden = true;
-  document.querySelector('#label').innerHTML = 'Downloading private model<br/>(about 3.8 MB)…';
+  document.querySelector('#label').innerHTML = 'Downloading private model<br/>(compressed for faster loading)…';
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 20_000);
   try {
-    const response = await fetch('artifacts/browser_model.json', { cache: 'no-cache', signal: controller.signal });
-    if (!response.ok) throw new Error('Model file is unavailable.');
-    state.model = await response.json(); state.loading = false;
+    let model;
+    if ('DecompressionStream' in window) {
+      const response = await fetch('artifacts/browser_model.json.gz', { cache: 'no-cache', signal: controller.signal });
+      if (!response.ok || !response.body) throw new Error('Compressed model file is unavailable.');
+      const decompressed = response.body.pipeThrough(new DecompressionStream('gzip'));
+      model = JSON.parse(await new Response(decompressed).text());
+    } else {
+      const response = await fetch('artifacts/browser_model.json', { cache: 'no-cache', signal: controller.signal });
+      if (!response.ok) throw new Error('Model file is unavailable.');
+      model = await response.json();
+    }
+    state.model = model; state.loading = false;
     document.querySelector('#label').innerHTML = 'Private browser model ready.<br/>Add writing to analyse.';
   } catch {
     state.loading = false;
