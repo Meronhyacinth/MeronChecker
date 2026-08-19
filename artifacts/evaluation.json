@@ -1,10 +1,10 @@
 {
   "version": "baseline-0.3.0",
   "algorithm": "TF-IDF word and character n-grams with balanced logistic regression",
-  "training_examples": 80000,
+  "training_examples": 120000,
   "training_set": {
-    "human": 50000,
-    "ai": 50000,
+    "human": 75000,
+    "ai": 75000,
     "total": 100000
   },
   "training_sources": [
@@ -19,21 +19,21 @@
       "0": "human",
       "1": "AI"
     },
-    "examples": 20000,
-    "accuracy": 0.9911,
-    "ai_precision": 0.9871,
-    "ai_recall": 0.9953,
-    "ai_f1": 0.9912,
-    "human_false_positive_rate": 0.013,
-    "ai_false_negative_rate": 0.0047,
+    "examples": 30000,
+    "accuracy": 0.9927,
+    "ai_precision": 0.9899,
+    "ai_recall": 0.9956,
+    "ai_f1": 0.9927,
+    "human_false_positive_rate": 0.0102,
+    "ai_false_negative_rate": 0.0044,
     "confusion_matrix": [
       [
-        9870,
-        130
+        14847,
+        153
       ],
       [
-        47,
-        9953
+        66,
+        14934
       ]
     ],
     "warning": "This random held-out score may be optimistic because it resembles training data."
@@ -45,20 +45,20 @@
       "1": "AI"
     },
     "examples": 4000,
-    "accuracy": 0.9653,
-    "ai_precision": 0.945,
-    "ai_recall": 0.988,
-    "ai_f1": 0.966,
-    "human_false_positive_rate": 0.0575,
-    "ai_false_negative_rate": 0.012,
+    "accuracy": 0.9613,
+    "ai_precision": 0.9395,
+    "ai_recall": 0.986,
+    "ai_f1": 0.9622,
+    "human_false_positive_rate": 0.0635,
+    "ai_false_negative_rate": 0.014,
     "confusion_matrix": [
       [
-        1885,
-        115
+        1873,
+        127
       ],
       [
-        24,
-        1976
+        28,
+        1972
       ]
     ],
     "warning": "This is stronger than an internal split, but does not establish universal real-world accuracy."
@@ -66,9 +66,9 @@
   "twenty_test_rounds": {
     "rounds": 20,
     "examples_per_round": 2000,
-    "average_accuracy": 0.9659,
-    "lowest_accuracy": 0.9595,
-    "highest_accuracy": 0.9715,
+    "average_accuracy": 0.9622,
+    "lowest_accuracy": 0.954,
+    "highest_accuracy": 0.9685,
     "method": "20 reproducible balanced resamples from the held-out external test set; this measures variation, not universal real-world accuracy."
   },
   "browser_export": "artifacts/browser_model.json",
