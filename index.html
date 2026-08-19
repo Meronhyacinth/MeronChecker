@@ -21,7 +21,7 @@
         <div class="editor-head"><b>Paste writing to analyse</b><span id="count">0 words</span></div>
         <textarea id="text" aria-label="Writing to analyse" placeholder="Paste at least a paragraph here..."></textarea>
         <div class="actions"><span></span><button class="primary" id="analyse">Analyse writing</button></div>
-        <label class="consent"><input id="sourceConsent" type="checkbox" /><span>Run automatic public-source check too. Selected phrases will be searched using OpenAlex, a public academic index.</span></label>
+        <label class="consent"><input id="sourceConsent" type="checkbox" /><span>Run automatic public-source check too. Selected phrases will be searched using OpenAlex, Crossref, and Semantic Scholar public academic indexes.</span></label>
         <div class="notice"><strong>Important</strong><span>MeronChecker does not decide misconduct. Do not submit private, confidential, or graded work to third-party checkers without permission.</span></div>
       </div>
       
@@ -43,7 +43,7 @@
   </section>
   <section class="mode-panel" id="sourcesPanel" role="tabpanel">
     <h2>Source similarity</h2>
-    <p class="source-intro">Automatically checks selected phrases against OpenAlex’s public academic index and shows possible exact overlaps. This is not Turnitin: it cannot check private student papers, subscription journals, or every web page.</p>
+    <p class="source-intro">Searches selected phrases across OpenAlex, Crossref, and Semantic Scholar public academic indexes, then shows possible exact overlaps. This is not Turnitin: it cannot check private student papers, subscription journals, or every web page.</p>
     <div class="source-list" id="sourceQueries"><div class="source-empty">Enable the automatic public-source check, then analyse at least 60 words.</div></div>
   </section>
 </aside>
@@ -144,6 +144,19 @@ function sourceUrl(work) {
   const doi = work.doi ? String(work.doi).replace(/^https?:\/\/doi\.org\//, '') : '';
   return doi ? 'https://doi.org/' + doi : (work.primary_location && work.primary_location.landing_page_url) || work.id || '#';
 }
+function textToInvertedIndex(value) {
+  const index = {};
+  words(String(value || '')).forEach((term, position) => { const key = term.toLowerCase(); (index[key] ||= []).push(position); });
+  return index;
+}
+function normalizeCrossref(item) {
+  const doi = item.DOI ? 'https://doi.org/' + item.DOI : '';
+  return { id: doi || item.URL || ('crossref:' + (item.title || []).join(' ')), display_name: (item.title || [])[0] || '', authorships: item.author && item.author.length ? [{ author: { display_name: [item.author[0].given, item.author[0].family].filter(Boolean).join(' ') || 'Crossref record' } }] : [], publication_year: item.published?.['date-parts']?.[0]?.[0] || item.issued?.['date-parts']?.[0]?.[0], doi, abstract_inverted_index: textToInvertedIndex(String(item.abstract || '').replace(/<[^>]*>/g, '')), provider: 'Crossref' };
+}
+function normalizeSemanticScholar(item) {
+  const doi = item.externalIds && item.externalIds.DOI ? 'https://doi.org/' + item.externalIds.DOI : '';
+  return { id: item.paperId || item.url || doi || ('semantic:' + item.title), display_name: item.title || '', authorships: item.authors && item.authors.length ? [{ author: { display_name: item.authors[0].name || 'Semantic Scholar record' } }] : [], publication_year: item.year, doi, primary_location: { landing_page_url: item.url || doi }, abstract_inverted_index: textToInvertedIndex(item.abstract || ''), provider: 'Semantic Scholar' };
+}
 function renderSourceReport(submission, works) {
   const target = document.querySelector('#sourceQueries');
   const candidates = works.map(work => {
@@ -158,14 +171,14 @@ function renderSourceReport(submission, works) {
   const resultCards = candidates.length ? candidates.map(({work, match, percentage}) => {
     const author = work.authorships && work.authorships[0] && work.authorships[0].author ? work.authorships[0].author.display_name : 'Public academic source';
     const detail = match.length >= 5 ? 'Possible exact overlap: “' + escapeHtml(match.phrase) + '” (' + match.length + ' words)' : 'Retrieved as a related public source; no 5-word exact overlap was found in the available title or abstract.';
-    return '<article class="source-result"><div class="source-result-head"><div><b>' + escapeHtml(work.display_name) + '</b><small>' + escapeHtml(author) + (work.publication_year ? ' · ' + work.publication_year : '') + '</small></div><span class="source-badge">' + percentage + '%</span></div><p>' + detail + '</p><a target="_blank" rel="noopener noreferrer" href="' + escapeHtml(sourceUrl(work)) + '">Open source ↗</a></article>';
+    return '<article class="source-result"><div class="source-result-head"><div><b>' + escapeHtml(work.display_name) + '</b><small>' + escapeHtml(author) + (work.publication_year ? ' · ' + work.publication_year : '') + (work.provider ? ' · ' + work.provider : ' · OpenAlex') + '</small></div><span class="source-badge">' + percentage + '%</span></div><p>' + detail + '</p><a target="_blank" rel="noopener noreferrer" href="' + escapeHtml(sourceUrl(work)) + '">Open source ↗</a></article>';
   }).join('') : '<div class="source-empty">No public academic sources were returned. This does not mean the writing has no overlap elsewhere.</div>';
-  target.innerHTML = '<div class="source-score"><b>' + overall + '%</b><span>Public-source overlap<br/>from retrieved sources</span></div>' + resultCards + '<div class="privacy-note">Coverage: OpenAlex public academic metadata and available abstracts only. This score is not a plagiarism decision and cannot cover Turnitin’s private repository.</div>';
+  target.innerHTML = '<div class="source-score"><b>' + overall + '%</b><span>Public-source overlap<br/>from retrieved sources</span></div>' + resultCards + '<div class="privacy-note">Coverage: public scholarly metadata and available abstracts from OpenAlex, Crossref, and Semantic Scholar only. This score is not a plagiarism decision and cannot cover Turnitin’s private repository.</div>';
 }
 async function runSourceCheck(value) {
   const target = document.querySelector('#sourceQueries');
   if (!document.querySelector('#sourceConsent').checked) {
-    target.innerHTML = '<div class="source-empty">Automatic public-source checking is off. Tick “Run automatic public-source check too”, then analyse again. This protects your writing from being sent to an external index without your choice.</div>';
+    target.innerHTML = '<div class="source-empty">Automatic scholarly-source checking is off. Tick the source-check option, then analyse again. Your writing is only sent to public indexes after you choose this.</div>';
     return;
   }
   const phrases = sourcePhrases(value);
@@ -173,19 +186,24 @@ async function runSourceCheck(value) {
     target.innerHTML = '<div class="source-empty">No suitable complete phrase was found. Add a longer paragraph and analyse again.</div>';
     return;
   }
-  target.innerHTML = '<div class="source-status">Checking public academic sources automatically…</div>';
-  try {
-    const responses = await Promise.all(phrases.map(phrase => fetch('https://api.openalex.org/works?per-page=3&select=id,display_name,authorships,publication_year,doi,abstract_inverted_index,primary_location&search=' + encodeURIComponent(phrase))));
-    const payloads = await Promise.all(responses.map(async response => {
-      if (!response.ok) throw new Error('Public index unavailable');
-      return response.json();
-    }));
-    const unique = new Map();
-    payloads.flatMap(payload => payload.results || []).forEach(work => unique.set(work.id, work));
-    renderSourceReport(value, [...unique.values()]);
-  } catch {
-    target.innerHTML = '<div class="source-empty">The public source index could not be reached right now. AI detection still ran privately in your browser; try the source check again later.</div>';
+  target.innerHTML = '<div class="source-status">Searching scholarly sources across OpenAlex, Crossref, and Semantic Scholar…</div>';
+  const requests = phrases.flatMap(phrase => {
+    const encoded = encodeURIComponent(phrase);
+    return [
+      fetch('https://api.openalex.org/works?per-page=4&select=id,display_name,authorships,publication_year,doi,abstract_inverted_index,primary_location&search=' + encoded).then(response => response.ok ? response.json() : Promise.reject()).then(payload => (payload.results || []).map(work => ({...work, provider: 'OpenAlex'}))),
+      fetch('https://api.crossref.org/works?rows=4&query.bibliographic=' + encoded).then(response => response.ok ? response.json() : Promise.reject()).then(payload => ((payload.message && payload.message.items) || []).map(normalizeCrossref)),
+      fetch('https://api.semanticscholar.org/graph/v1/paper/search?limit=4&fields=paperId,title,abstract,authors,year,externalIds,url&query=' + encoded).then(response => response.ok ? response.json() : Promise.reject()).then(payload => (payload.data || []).map(normalizeSemanticScholar))
+    ];
+  });
+  const settled = await Promise.allSettled(requests);
+  const works = settled.filter(item => item.status === 'fulfilled').flatMap(item => item.value);
+  if (!works.length) {
+    target.innerHTML = '<div class="source-empty">The public scholarly indexes could not be reached right now. Try again later.</div>';
+    return;
   }
+  const unique = new Map();
+  works.forEach(work => { const key = (work.doi || work.id || work.display_name || '').toLowerCase(); if (!unique.has(key)) unique.set(key, work); });
+  renderSourceReport(value, [...unique.values()]);
 }
 
 async function loadModel() {
