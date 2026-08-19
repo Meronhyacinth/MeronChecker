@@ -19,6 +19,7 @@ HC3_PER_CLASS = 6_000
 MODERN_TRAIN_PER_CLASS = 12_000
 WIKIPEDIA_HUMAN = TARGET_PER_CLASS - HC3_PER_CLASS - MODERN_TRAIN_PER_CLASS
 MDTA_AI = TARGET_PER_CLASS - HC3_PER_CLASS - MODERN_TRAIN_PER_CLASS
+MDTA_MAX_PER_MODEL = max(1, MDTA_AI // 6)
 EXTERNAL_PER_CLASS = 2_000
 TEST_ROUNDS = 20
 HC3_URL = "https://huggingface.co/datasets/Hello-SimpleAI/HC3/resolve/main/all.jsonl"
@@ -97,33 +98,39 @@ def collect_wikipedia_human(limit):
     return samples
 
 def iter_model_responses(row):
-    for model in (row.get("model_responses") or {}).values():
-        for response in model.values():
+    """Yield model-labelled responses so no one generator dominates training."""
+    for model_name, responses in (row.get("model_responses") or {}).items():
+        for response in (responses or {}).values():
             if isinstance(response, str):
-                yield response
+                yield str(model_name), response
     # Adversarial answers are intentionally held out from training.
 
 
 def collect_mdta_ai(limit):
-    """Collect newer open-model outputs, keeping adversarial variants for evaluation only."""
-    samples = []
+    """Collect several open-model output families with a per-model diversity cap."""
+    buckets = {}
     for config in MDTA_CONFIGS:
         rows = load_dataset("nsp909/MDTA", config, split="train", streaming=True).shuffle(
             seed=RANDOM_SEED, buffer_size=2_000
         )
         for row in rows:
-            for response in iter_model_responses(row):
+            for model_name, response in iter_model_responses(row):
+                key = config + ":" + model_name
+                bucket = buckets.setdefault(key, [])
                 text = normalise(response)
-                if len(text) >= 120:
-                    samples.append(text)
-            if len(samples) >= limit * 2:
-                break
-        if len(samples) >= limit * 2:
+                if len(text) >= 120 and len(bucket) < MDTA_MAX_PER_MODEL * 2:
+                    bucket.append(text)
+        if sum(len(items) for items in buckets.values()) >= limit * 4:
             break
-    random.Random(RANDOM_SEED).shuffle(samples)
+    samples = []
+    rng = random.Random(RANDOM_SEED)
+    for key in sorted(buckets):
+        rng.shuffle(buckets[key])
+        samples.extend(take_unique(buckets[key], MDTA_MAX_PER_MODEL))
+    rng.shuffle(samples)
     samples = take_unique(samples, limit)
     if len(samples) < limit:
-        raise RuntimeError("MDTA did not provide enough usable open-model responses.")
+        raise RuntimeError("MDTA did not provide enough diverse usable open-model responses.")
     return samples
 
 
@@ -173,7 +180,7 @@ def export_browser_model(features, model):
     word_vectorizer = features.transformer_list[0][1]
     char_vectorizer = features.transformer_list[1][1]
     payload = {
-        "version": "baseline-0.4.2",
+        "version": "baseline-0.4.3",
         "note": "Runs locally in the browser. It is an indicator, not proof of AI use.",
         "word": {"vocabulary": {token: int(index) for token, index in word_vectorizer.vocabulary_.items()}, "idf": word_vectorizer.idf_.tolist()},
         "char": {"vocabulary": {token: int(index) for token, index in char_vectorizer.vocabulary_.items()}, "idf": char_vectorizer.idf_.tolist()},
@@ -220,7 +227,7 @@ def main():
             "Hello-SimpleAI/HC3",
             "silentone0725/ai-human-text-detection-v1 train split",
             "wikimedia/wikipedia 20231101.en passages",
-            "nsp909/MDTA model_responses",
+            "nsp909/MDTA model_responses (per-model diversity capped)",
         ],
         "internal_validation": metric_report(y_internal, internal_predictions, "Mixed held-out split from training sources", "This random held-out score may be optimistic because it resembles training data."),
         "external_evaluation": metric_report(external_labels, external_predictions, "silentone0725/ai-human-text-detection-v1 test split (not used for training)", "This is stronger than an internal split, but does not establish universal real-world accuracy."),
