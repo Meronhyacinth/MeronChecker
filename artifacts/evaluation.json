@@ -1,17 +1,17 @@
 {
-  "version": "baseline-0.3.0",
+  "version": "baseline-0.4.2",
   "algorithm": "TF-IDF word and character n-grams with balanced logistic regression",
-  "training_examples": 240000,
+  "training_examples": 280000,
   "training_set": {
-    "human": 150000,
-    "ai": 150000,
-    "total": 100000
+    "human": 175000,
+    "ai": 175000,
+    "total": 350000
   },
   "training_sources": [
     "Hello-SimpleAI/HC3",
     "silentone0725/ai-human-text-detection-v1 train split",
     "wikimedia/wikipedia 20231101.en passages",
-    "nsp909/MDTA model_responses"
+    "nsp909/MDTA model_responses (per-model diversity capped)"
   ],
   "internal_validation": {
     "dataset": "Mixed held-out split from training sources",
@@ -19,21 +19,21 @@
       "0": "human",
       "1": "AI"
     },
-    "examples": 60000,
-    "accuracy": 0.9961,
-    "ai_precision": 0.9945,
-    "ai_recall": 0.9977,
-    "ai_f1": 0.9961,
-    "human_false_positive_rate": 0.0055,
-    "ai_false_negative_rate": 0.0023,
+    "examples": 70000,
+    "accuracy": 0.9941,
+    "ai_precision": 0.9925,
+    "ai_recall": 0.9958,
+    "ai_f1": 0.9942,
+    "human_false_positive_rate": 0.0075,
+    "ai_false_negative_rate": 0.0042,
     "confusion_matrix": [
       [
-        29834,
-        166
+        34738,
+        262
       ],
       [
-        70,
-        29930
+        148,
+        34852
       ]
     ],
     "warning": "This random held-out score may be optimistic because it resembles training data."
@@ -45,20 +45,20 @@
       "1": "AI"
     },
     "examples": 4000,
-    "accuracy": 0.9585,
-    "ai_precision": 0.9379,
-    "ai_recall": 0.982,
-    "ai_f1": 0.9595,
-    "human_false_positive_rate": 0.065,
-    "ai_false_negative_rate": 0.018,
+    "accuracy": 0.9453,
+    "ai_precision": 0.9187,
+    "ai_recall": 0.977,
+    "ai_f1": 0.9469,
+    "human_false_positive_rate": 0.0865,
+    "ai_false_negative_rate": 0.023,
     "confusion_matrix": [
       [
-        1870,
-        130
+        1827,
+        173
       ],
       [
-        36,
-        1964
+        46,
+        1954
       ]
     ],
     "warning": "This is stronger than an internal split, but does not establish universal real-world accuracy."
@@ -66,9 +66,9 @@
   "twenty_test_rounds": {
     "rounds": 20,
     "examples_per_round": 2000,
-    "average_accuracy": 0.9597,
-    "lowest_accuracy": 0.951,
-    "highest_accuracy": 0.966,
+    "average_accuracy": 0.9463,
+    "lowest_accuracy": 0.9375,
+    "highest_accuracy": 0.95,
     "method": "20 reproducible balanced resamples from the held-out external test set; this measures variation, not universal real-world accuracy."
   },
   "browser_export": "artifacts/browser_model.json",
