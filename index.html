@@ -20,7 +20,7 @@
       <div class="card editor">
         <div class="editor-head"><b>Paste writing to analyse</b><span id="count">0 words</span></div>
         <textarea id="text" aria-label="Writing to analyse" placeholder="Paste at least a paragraph here..."></textarea>
-        <div class="actions"><button class="ghost" id="sample">Use sample</button><button class="primary" id="analyse">Analyse writing</button></div>
+        <div class="actions"><span></span><button class="primary" id="analyse">Analyse writing</button></div>
         <label class="consent"><input id="sourceConsent" type="checkbox" /><span>Run automatic public-source check too. Selected phrases will be searched using OpenAlex, a public academic index.</span></label>
         <div class="notice"><strong>Important</strong><span>MeronChecker does not decide misconduct. Do not submit private, confidential, or graded work to third-party checkers without permission.</span></div>
       </div>
@@ -55,7 +55,6 @@
 
 const text = document.querySelector('#text');
 const count = document.querySelector('#count');
-const sample = `Artificial intelligence is changing how people work, study, and communicate in universities, offices, and daily life. It can organise ideas, summarise complex information, and support early drafts, but it cannot replace a writer\'s responsibility. A strong essay needs reliable evidence, accurate citations, and a clear argument that reflects the writer's own understanding. Students should verify every claim, check whether sources are current, and explain why each source supports the conclusion. They should also revise wording that sounds generic or overly formal. Technology is most useful when it helps people think more carefully rather than encouraging them to submit unreviewed text. Responsible writing requires honesty, context, and enough detail for a reader to understand how the final conclusion was reached.`;
 const state = { model: null, loading: true };
 const words = value => value.trim().match(/[A-Za-zÀ-ÿ0-9_']+/g) || [];
 const set = (selector, value) => { document.querySelector(selector).textContent = value; };
@@ -218,7 +217,6 @@ async function loadModel() {
   }
 }
 text.addEventListener('input', () => set('#count', words(text.value).length + ' words'));
-document.querySelector('#sample').onclick = () => { text.value = sample; text.dispatchEvent(new Event('input')); };
 document.querySelector('#modelRetry').onclick = () => loadModel();
 document.querySelector('#analyse').onclick = () => {
   const value = text.value.trim(), metrics = metricValues(value);
