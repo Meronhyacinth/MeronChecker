@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="MeronChecker is a transparent AI-writing likelihood and source-similarity assistant." />
+  <meta name="description" content="MeronChecker is a transparent AI-writing likelihood assistant." />
   <title>MeronChecker — Writing insight, not accusation</title>
   <style>
     :root{--ink:#eef3ff;--muted:#9aabc2;--line:#26354c;--bg:#07101d;--panel:#0d1828;--panel2:#111f34;--violet:#8e6bff;--cyan:#52e4d4;--amber:#ffcb6b;--danger:#ff7676}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 75% -10%,#35205b 0,transparent 35%),var(--bg);color:var(--ink);font:15px Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,textarea{font:inherit}.shell{max-width:1180px;margin:auto;padding:24px}.nav{display:flex;justify-content:space-between;align-items:center;padding:8px 0 46px}.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.04em;font-size:21px}.mark{width:28px;height:28px;border:2px solid var(--cyan);border-radius:9px;display:grid;place-items:center;color:var(--cyan);font-size:14px}.nav span{color:var(--muted);font-size:13px}.hero{max-width:780px;margin:26px auto 44px;text-align:center}.eyebrow{color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.hero h1{font-size:clamp(38px,7vw,68px);line-height:.98;letter-spacing:-.065em;margin:15px 0 19px}.hero h1 em{font-style:normal;color:#a78dff}.hero p{margin:auto;max-width:620px;color:var(--muted);line-height:1.7}.workspace{display:grid;grid-template-columns:1.25fr .75fr;gap:18px}.card{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#101c2e,#0a1422);box-shadow:0 16px 50px #0002}.editor{padding:18px}.editor-head,.actions,.metric-head{display:flex;align-items:center;justify-content:space-between;gap:14px}.editor-head b{font-size:14px}.editor-head span{color:var(--muted);font-size:12px}.editor textarea{width:100%;min-height:290px;resize:vertical;margin:14px 0;border:1px solid #31425e;border-radius:12px;background:#08111e;color:var(--ink);padding:16px;line-height:1.65;outline:none}.editor textarea:focus{border-color:#8e6bff;box-shadow:0 0 0 3px #8e6bff22}.primary,.ghost{border:0;border-radius:10px;padding:11px 15px;cursor:pointer;font-weight:750;font-size:13px}.primary{color:#08111e;background:linear-gradient(120deg,#66eedf,#89a0ff)}.ghost{color:var(--ink);border:1px solid #3b4b66;background:transparent}.notice{display:flex;gap:10px;margin-top:15px;padding:12px;border-radius:10px;background:#172640;color:#cbd6ea;font-size:12px;line-height:1.5}.notice strong{color:var(--amber)}.results{padding:18px}.results h2{font-size:14px;margin:0}.meter{position:relative;height:10px;margin:17px 0 10px;border-radius:99px;background:linear-gradient(90deg,#52e4d4,#ffcb6b,#ff7676)}.needle{position:absolute;top:-6px;left:10%;width:4px;height:22px;border-radius:5px;background:#fff;box-shadow:0 0 0 3px #08111e}.score-row{display:flex;align-items:end;justify-content:space-between}.score{font-size:52px;font-weight:850;letter-spacing:-.08em}.score-label{color:var(--muted);font-size:12px;text-align:right;line-height:1.5}.metrics{display:grid;gap:10px;margin-top:24px}.metric{padding:13px;border:1px solid #273853;border-radius:12px;background:#0a1422}.metric-head{font-size:12px}.metric-head span{color:var(--muted)}.bar{height:4px;margin-top:10px;border-radius:9px;background:#23334b}.bar i{display:block;height:100%;width:0;border-radius:inherit;background:var(--violet);transition:width .4s}.similarity{grid-column:1/-1;padding:22px}.similarity h2{margin:0 0 7px;font-size:18px}.similarity>p{margin:0 0 18px;color:var(--muted);font-size:13px;line-height:1.6}.matches{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.match{min-height:108px;padding:14px;border:1px solid #293950;border-radius:12px;background:#0a1422}.tag{display:inline-block;padding:4px 7px;border-radius:5px;background:#28394f;color:#b9c9df;font-size:10px;font-weight:700}.match b{display:block;margin:12px 0 5px;font-size:13px}.match p{margin:0;color:var(--muted);font-size:11px;line-height:1.45}.methods{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin:26px 0}.method{padding:17px;border-top:1px solid #34445f}.method b{color:var(--cyan);font-size:12px}.method p{margin:7px 0 0;color:var(--muted);font-size:12px;line-height:1.55}footer{padding:18px 0 5px;color:#71839e;font-size:12px;text-align:center}@media(max-width:760px){.shell{padding:18px}.nav{padding-bottom:20px}.nav span{display:none}.workspace{grid-template-columns:1fr}.similarity{grid-column:auto}.matches,.methods{grid-template-columns:1fr}.editor textarea{min-height:230px}.hero{margin-top:15px}.score{font-size:45px}}
@@ -15,22 +15,17 @@
 <body>
   <main class="shell">
     <nav class="nav"><div class="brand"><div class="mark">M</div>MeronChecker</div><span>Writing insight, not accusation.</span></nav>
-    <section class="hero"><div class="eyebrow">English writing assistant · prototype</div><h1>Check writing with <em>context.</em></h1><p>Explore AI-writing signals and possible phrase overlaps. Results are prompts for review—not proof of plagiarism or AI use.</p></section>
+    <section class="hero"><div class="eyebrow">English writing assistant · prototype</div><h1>Check writing with <em>context.</em></h1><p>Explore AI-writing signals through a private, browser-based model. Results are prompts for review—not proof of AI use.</p></section>
     <section class="workspace" aria-label="Writing analysis workspace">
       <div class="card editor">
         <div class="editor-head"><b>Paste writing to analyse</b><span id="count">0 words</span></div>
         <textarea id="text" aria-label="Writing to analyse" placeholder="Paste at least a paragraph here..."></textarea>
         <div class="actions"><span></span><button class="primary" id="analyse">Analyse writing</button></div>
-        <label class="consent"><input id="sourceConsent" type="checkbox" /><span>Run automatic public-source check too. Selected phrases will be searched using OpenAlex, Crossref, and Semantic Scholar public academic indexes.</span></label>
         <div class="notice"><strong>Important</strong><span>MeronChecker does not decide misconduct. Do not submit private, confidential, or graded work to third-party checkers without permission.</span></div>
       </div>
       
 <aside class="card results" aria-live="polite">
-  <div class="mode-tabs" role="tablist" aria-label="Analysis results">
-    <button class="mode-tab active" type="button" data-mode="ai">AI Detector</button>
-    <button class="mode-tab" type="button" data-mode="sources">Plagiarism Checker</button>
-  </div>
-  <section class="mode-panel active" id="aiPanel" role="tabpanel">
+  <section id="aiPanel" role="tabpanel">
     <h2>AI-writing likelihood</h2><div class="meter"><i class="needle" id="needle"></i></div>
     <div class="score-row"><div class="score" id="score">—</div><div class="score-label" id="label">Loading private<br/>browser model…</div></div>
     <div class="metrics">
@@ -41,14 +36,9 @@
     <div class="privacy-note">This indicator runs locally in your browser. It does not prove AI use or misconduct.</div>
     <button class="ghost model-retry" type="button" id="modelRetry" hidden>Retry loading model</button>
   </section>
-  <section class="mode-panel" id="sourcesPanel" role="tabpanel">
-    <h2>Source similarity</h2>
-    <p class="source-intro">Searches selected phrases across OpenAlex, Crossref, and Semantic Scholar public academic indexes, then shows possible exact overlaps. This is not Turnitin: it cannot check private student papers, subscription journals, or every web page.</p>
-    <div class="source-list" id="sourceQueries"><div class="source-empty">Enable the automatic public-source check, then analyse at least 60 words.</div></div>
-  </section>
 </aside>
     </section>
-    <section class="methods"><article class="method"><b>01 · Transparent scoring</b><p>Every indicator is explained. A percentage cannot prove authorship.</p></article><article class="method"><b>02 · Trainable model</b><p>The repository includes a training pipeline and held-out evaluation report.</p></article><article class="method"><b>03 · Cross-checking</b><p>Compare test samples with permitted external tools; never treat agreement as certainty.</p></article></section>
+    <section class="methods"><article class="method"><b>01 · Transparent scoring</b><p>Every indicator is explained. A percentage cannot prove authorship.</p></article><article class="method"><b>02 · Trainable model</b><p>The repository includes a training pipeline and held-out evaluation report.</p></article><article class="method"><b>03 · Careful evaluation</b><p>Each model release is tested on held-out examples; results are not treated as universal accuracy.</p></article></section>
     <footer>MeronChecker · Built for learning and careful review.</footer>
   </main>
 <script>
@@ -60,13 +50,6 @@ const words = value => value.trim().match(/[A-Za-zÀ-ÿ0-9_']+/g) || [];
 const set = (selector, value) => { document.querySelector(selector).textContent = value; };
 const width = (selector, value) => { document.querySelector(selector).style.width = value + '%'; };
 const sigmoid = value => 1 / (1 + Math.exp(-Math.max(-30, Math.min(30, value))));
-
-function selectMode(mode) {
-  document.querySelectorAll('.mode-tab').forEach(button => button.classList.toggle('active', button.dataset.mode === mode));
-  document.querySelector('#aiPanel').classList.toggle('active', mode === 'ai');
-  document.querySelector('#sourcesPanel').classList.toggle('active', mode === 'sources');
-}
-document.querySelectorAll('.mode-tab').forEach(button => button.onclick = () => selectMode(button.dataset.mode));
 
 function metricValues(value) {
   const allWords = words(value);
@@ -109,103 +92,6 @@ function showMetrics(metrics) {
   set('#variation', metrics.variation + '/100'); set('#repeat', metrics.repeated + '/100'); set('#length', metrics.wordCount + ' words');
   width('#variationBar', metrics.variation); width('#repeatBar', metrics.repeated); width('#lengthBar', metrics.lengthScore);
 }
-function escapeHtml(value) {
-  return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
-function sourcePhrases(value) {
-  const candidates = value.split(/[.!?]+/).map(item => item.trim()).filter(item => words(item).length >= 9 && words(item).length <= 34);
-  const seen = new Set();
-  return candidates.sort((a, b) => words(b).length - words(a).length).filter(item => {
-    const key = item.toLowerCase();
-    if (seen.has(key)) return false; seen.add(key); return true;
-  }).slice(0, 3).map(item => item.length > 180 ? item.slice(0, 177) + '…' : item);
-}
-function restoreAbstract(index) {
-  if (!index || typeof index !== 'object') return '';
-  const positions = [];
-  Object.entries(index).forEach(([term, slots]) => (slots || []).forEach(position => { positions[position] = term; }));
-  return positions.join(' ');
-}
-function longestExactRun(submission, source) {
-  const left = words(submission.toLowerCase()), right = words(source.toLowerCase());
-  const locations = new Map();
-  right.forEach((token, index) => { if (!locations.has(token)) locations.set(token, []); locations.get(token).push(index); });
-  let best = { length: 0, phrase: '' };
-  left.forEach((token, index) => {
-    (locations.get(token) || []).forEach(matchIndex => {
-      let length = 0;
-      while (index + length < left.length && matchIndex + length < right.length && left[index + length] === right[matchIndex + length]) length += 1;
-      if (length > best.length) best = { length, phrase: left.slice(index, index + length).join(' ') };
-    });
-  });
-  return best;
-}
-function sourceUrl(work) {
-  const doi = work.doi ? String(work.doi).replace(/^https?:\/\/doi\.org\//, '') : '';
-  return doi ? 'https://doi.org/' + doi : (work.primary_location && work.primary_location.landing_page_url) || work.id || '#';
-}
-function textToInvertedIndex(value) {
-  const index = {};
-  words(String(value || '')).forEach((term, position) => { const key = term.toLowerCase(); (index[key] ||= []).push(position); });
-  return index;
-}
-function normalizeCrossref(item) {
-  const doi = item.DOI ? 'https://doi.org/' + item.DOI : '';
-  return { id: doi || item.URL || ('crossref:' + (item.title || []).join(' ')), display_name: (item.title || [])[0] || '', authorships: item.author && item.author.length ? [{ author: { display_name: [item.author[0].given, item.author[0].family].filter(Boolean).join(' ') || 'Crossref record' } }] : [], publication_year: item.published?.['date-parts']?.[0]?.[0] || item.issued?.['date-parts']?.[0]?.[0], doi, abstract_inverted_index: textToInvertedIndex(String(item.abstract || '').replace(/<[^>]*>/g, '')), provider: 'Crossref' };
-}
-function normalizeSemanticScholar(item) {
-  const doi = item.externalIds && item.externalIds.DOI ? 'https://doi.org/' + item.externalIds.DOI : '';
-  return { id: item.paperId || item.url || doi || ('semantic:' + item.title), display_name: item.title || '', authorships: item.authors && item.authors.length ? [{ author: { display_name: item.authors[0].name || 'Semantic Scholar record' } }] : [], publication_year: item.year, doi, primary_location: { landing_page_url: item.url || doi }, abstract_inverted_index: textToInvertedIndex(item.abstract || ''), provider: 'Semantic Scholar' };
-}
-function renderSourceReport(submission, works) {
-  const target = document.querySelector('#sourceQueries');
-  const candidates = works.map(work => {
-    const sourceText = [work.display_name || '', restoreAbstract(work.abstract_inverted_index)].join(' ');
-    const match = longestExactRun(submission, sourceText);
-    const sourceWords = words(sourceText).length;
-    const percentage = match.length >= 5 && sourceWords ? Math.min(100, Math.round((match.length / Math.max(5, words(submission).length)) * 1000) / 10) : 0;
-    return { work, match, percentage };
-  }).filter(item => item.work && item.work.display_name).sort((a, b) => b.match.length - a.match.length).slice(0, 6);
-  const matchedWords = candidates.reduce((total, item) => total + (item.match.length >= 5 ? item.match.length : 0), 0);
-  const overall = Math.min(100, Math.round((matchedWords / Math.max(1, words(submission).length)) * 100));
-  const resultCards = candidates.length ? candidates.map(({work, match, percentage}) => {
-    const author = work.authorships && work.authorships[0] && work.authorships[0].author ? work.authorships[0].author.display_name : 'Public academic source';
-    const detail = match.length >= 5 ? 'Possible exact overlap: “' + escapeHtml(match.phrase) + '” (' + match.length + ' words)' : 'Retrieved as a related public source; no 5-word exact overlap was found in the available title or abstract.';
-    return '<article class="source-result"><div class="source-result-head"><div><b>' + escapeHtml(work.display_name) + '</b><small>' + escapeHtml(author) + (work.publication_year ? ' · ' + work.publication_year : '') + (work.provider ? ' · ' + work.provider : ' · OpenAlex') + '</small></div><span class="source-badge">' + percentage + '%</span></div><p>' + detail + '</p><a target="_blank" rel="noopener noreferrer" href="' + escapeHtml(sourceUrl(work)) + '">Open source ↗</a></article>';
-  }).join('') : '<div class="source-empty">No public academic sources were returned. This does not mean the writing has no overlap elsewhere.</div>';
-  target.innerHTML = '<div class="source-score"><b>' + overall + '%</b><span>Public-source overlap<br/>from retrieved sources</span></div>' + resultCards + '<div class="privacy-note">Coverage: public scholarly metadata and available abstracts from OpenAlex, Crossref, and Semantic Scholar only. This score is not a plagiarism decision and cannot cover Turnitin’s private repository.</div>';
-}
-async function runSourceCheck(value) {
-  const target = document.querySelector('#sourceQueries');
-  if (!document.querySelector('#sourceConsent').checked) {
-    target.innerHTML = '<div class="source-empty">Automatic scholarly-source checking is off. Tick the source-check option, then analyse again. Your writing is only sent to public indexes after you choose this.</div>';
-    return;
-  }
-  const phrases = sourcePhrases(value);
-  if (!phrases.length) {
-    target.innerHTML = '<div class="source-empty">No suitable complete phrase was found. Add a longer paragraph and analyse again.</div>';
-    return;
-  }
-  target.innerHTML = '<div class="source-status">Searching scholarly sources across OpenAlex, Crossref, and Semantic Scholar…</div>';
-  const requests = phrases.flatMap(phrase => {
-    const encoded = encodeURIComponent(phrase);
-    return [
-      fetch('https://api.openalex.org/works?per-page=4&select=id,display_name,authorships,publication_year,doi,abstract_inverted_index,primary_location&search=' + encoded).then(response => response.ok ? response.json() : Promise.reject()).then(payload => (payload.results || []).map(work => ({...work, provider: 'OpenAlex'}))),
-      fetch('https://api.crossref.org/works?rows=4&query.bibliographic=' + encoded).then(response => response.ok ? response.json() : Promise.reject()).then(payload => ((payload.message && payload.message.items) || []).map(normalizeCrossref)),
-      fetch('https://api.semanticscholar.org/graph/v1/paper/search?limit=4&fields=paperId,title,abstract,authors,year,externalIds,url&query=' + encoded).then(response => response.ok ? response.json() : Promise.reject()).then(payload => (payload.data || []).map(normalizeSemanticScholar))
-    ];
-  });
-  const settled = await Promise.allSettled(requests);
-  const works = settled.filter(item => item.status === 'fulfilled').flatMap(item => item.value);
-  if (!works.length) {
-    target.innerHTML = '<div class="source-empty">The public scholarly indexes could not be reached right now. Try again later.</div>';
-    return;
-  }
-  const unique = new Map();
-  works.forEach(work => { const key = (work.doi || work.id || work.display_name || '').toLowerCase(); if (!unique.has(key)) unique.set(key, work); });
-  renderSourceReport(value, [...unique.values()]);
-}
-
 async function loadModel() {
   const retry = document.querySelector('#modelRetry');
   state.loading = true; retry.hidden = true;
@@ -244,7 +130,7 @@ document.querySelector('#analyse').onclick = () => {
   set('#score', likelihood + '%');
   document.querySelector('#label').innerHTML = likelihood < 35 ? 'Lower-signal result<br/>Review, do not conclude.' : likelihood < 65 ? 'Mixed signals found<br/>Review with context.' : 'More model-like signals<br/>Review with context.';
   document.querySelector('#needle').style.left = likelihood + '%';
-  showMetrics(metrics); runSourceCheck(value); selectMode(document.querySelector('#sourceConsent').checked ? 'sources' : 'ai');
+  showMetrics(metrics);
 };
 loadModel();
 
