@@ -1,4 +1,4 @@
-"""Train an inspectable English AI-writing baseline from 300,000 public labelled examples."""
+"""Train an inspectable English AI-writing baseline from 350,000 public labelled examples."""
 from pathlib import Path
 import json
 import random
@@ -14,7 +14,7 @@ from sklearn.metrics import accuracy_score, precision_recall_fscore_support, con
 ROOT = Path(__file__).resolve().parents[1]
 MODEL_DIR = ROOT / "artifacts"
 RANDOM_SEED = 42
-TARGET_PER_CLASS = 150_000
+TARGET_PER_CLASS = 175_000
 HC3_PER_CLASS = 6_000
 MODERN_TRAIN_PER_CLASS = 12_000
 WIKIPEDIA_HUMAN = TARGET_PER_CLASS - HC3_PER_CLASS - MODERN_TRAIN_PER_CLASS
@@ -173,7 +173,7 @@ def export_browser_model(features, model):
     word_vectorizer = features.transformer_list[0][1]
     char_vectorizer = features.transformer_list[1][1]
     payload = {
-        "version": "baseline-0.4.1",
+        "version": "baseline-0.4.2",
         "note": "Runs locally in the browser. It is an indicator, not proof of AI use.",
         "word": {"vocabulary": {token: int(index) for token, index in word_vectorizer.vocabulary_.items()}, "idf": word_vectorizer.idf_.tolist()},
         "char": {"vocabulary": {token: int(index) for token, index in char_vectorizer.vocabulary_.items()}, "idf": char_vectorizer.idf_.tolist()},
@@ -212,10 +212,10 @@ def main():
     external_predictions = model.predict(features.transform(external_texts))
 
     report = {
-        "version": "baseline-0.3.0",
+        "version": "baseline-0.4.2",
         "algorithm": "TF-IDF word and character n-grams with balanced logistic regression",
         "training_examples": len(x_train),
-        "training_set": {"human": TARGET_PER_CLASS, "ai": TARGET_PER_CLASS, "total": 100_000},
+        "training_set": {"human": TARGET_PER_CLASS, "ai": TARGET_PER_CLASS, "total": TARGET_PER_CLASS * 2},
         "training_sources": [
             "Hello-SimpleAI/HC3",
             "silentone0725/ai-human-text-detection-v1 train split",
