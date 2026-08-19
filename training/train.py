@@ -1,4 +1,4 @@
-"""Train an inspectable English AI-writing baseline from 100,000 public labelled examples."""
+"""Train an inspectable English AI-writing baseline from 150,000 public labelled examples."""
 from pathlib import Path
 import json
 import random
@@ -14,7 +14,7 @@ from sklearn.metrics import accuracy_score, precision_recall_fscore_support, con
 ROOT = Path(__file__).resolve().parents[1]
 MODEL_DIR = ROOT / "artifacts"
 RANDOM_SEED = 42
-TARGET_PER_CLASS = 50_000
+TARGET_PER_CLASS = 75_000
 HC3_PER_CLASS = 6_000
 MODERN_TRAIN_PER_CLASS = 12_000
 WIKIPEDIA_HUMAN = TARGET_PER_CLASS - HC3_PER_CLASS - MODERN_TRAIN_PER_CLASS
@@ -173,7 +173,7 @@ def export_browser_model(features, model):
     word_vectorizer = features.transformer_list[0][1]
     char_vectorizer = features.transformer_list[1][1]
     payload = {
-        "version": "baseline-0.3.0",
+        "version": "baseline-0.4.0",
         "note": "Runs locally in the browser. It is an indicator, not proof of AI use.",
         "word": {"vocabulary": {token: int(index) for token, index in word_vectorizer.vocabulary_.items()}, "idf": word_vectorizer.idf_.tolist()},
         "char": {"vocabulary": {token: int(index) for token, index in char_vectorizer.vocabulary_.items()}, "idf": char_vectorizer.idf_.tolist()},
@@ -193,8 +193,8 @@ def main():
 
     texts = hc3_human + modern_human + wikipedia_human + hc3_ai + modern_ai + mdta_ai
     labels = [0] * TARGET_PER_CLASS + [1] * TARGET_PER_CLASS
-    if len(texts) != 100_000 or len(labels) != 100_000:
-        raise RuntimeError("Training set must contain exactly 100,000 balanced examples.")
+    if len(texts) != TARGET_PER_CLASS * 2 or len(labels) != TARGET_PER_CLASS * 2:
+        raise RuntimeError("Training set must contain the requested balanced example count.")
 
     x_train, x_internal, y_train, y_internal = train_test_split(
         texts, labels, test_size=0.20, random_state=RANDOM_SEED, stratify=labels
