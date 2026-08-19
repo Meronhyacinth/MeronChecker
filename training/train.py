@@ -13,7 +13,7 @@ from sklearn.metrics import accuracy_score, precision_recall_fscore_support, con
 
 ROOT = Path(__file__).resolve().parents[1]
 MODEL_DIR = ROOT / "artifacts"
-RANDOM_SEED = 42
+RANDOM_SEED = 42  # 500k training retry
 TARGET_PER_CLASS = 250_000
 HC3_PER_CLASS = 6_000
 MODERN_TRAIN_PER_CLASS = 12_000
